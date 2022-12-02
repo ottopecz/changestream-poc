@@ -1,0 +1,21 @@
+{
+  "name": "notifications",
+  "version": "1.0.0",
+  "description": "Converge exercise - notifications service",
+  "main": ".dist/listen.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint '**/*.{js,ts}'",
+    "lint:fix": "eslint --fix '**/*.{js,ts}'",
+    "test": "jest",
+    "start": "node .dist/listen.js"
+  },
+  "keywords": [
+    "converge",
+    "exercise",
+    "notifications",
+    "service"
+  ],
+  "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
+  "license": "ISC"
+}
