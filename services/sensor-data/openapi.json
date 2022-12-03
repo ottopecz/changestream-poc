@@ -1,0 +1,120 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Sensor Data Service",
+    "description": "Converge Exercise - Sensor Data Service.",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/data": {
+      "put": {
+        "summary": "Add new Sensor Data",
+        "description": "Add new Sensor Data",
+        "operationId": "addSensorData",
+        "requestBody": {
+          "description": "New Sensor Data To Add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SensorData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {}
+          }
+        }
+      },
+      "get": {
+        "summary": "Query Sensor Data",
+        "description": "Returns a Sensor Data document",
+        "operationId": "querySensorData",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sensorId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The id if the sensor"
+          },
+          {
+            "in": "query",
+            "name": "since",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "The epoch time since"
+          },
+          {
+            "in": "query",
+            "name": "until",
+            "required": true,
+            "schema": {
+              "type": "number"
+            },
+            "description": "The epoch time until"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SensorData"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No Sensor Data found",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SensorData": {
+        "type": "object",
+        "required": [
+          "sensorId",
+          "time",
+          "value"
+        ],
+        "properties": {
+          "sensorId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "time": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "value": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      }
+    }
+  }
+}
