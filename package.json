@@ -16,6 +16,14 @@
   ],
   "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ottopecz/converge-exercise/issues"
+  },
+  "homepage": "https://github.com/ottopecz/converge-exercise#README.md",
   "workspaces": [
     "services/sensor-data",
     "services/notifications",
