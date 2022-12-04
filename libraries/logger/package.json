@@ -1,0 +1,32 @@
+{
+  "name": "@converge-exercise/logger",
+  "version": "1.0.0",
+  "description": "Converge exercise - logger library",
+  "main": ".dist/index.js",
+  "types": ".src/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint '**/*.{js,ts}'",
+    "lint:fix": "eslint --fix '**/*.{js,ts}'",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+  },
+  "keywords": [
+    "converge",
+    "exercise",
+    "logger"
+  ],
+  "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ottopecz/converge-exercise/issues"
+  },
+  "homepage": "https://github.com/ottopecz/converge-exercise#readme",
+  "dependencies": {
+    "fast-safe-stringify": "^2.1.1",
+    "winston": "^3.8.2"
+  }
+}
