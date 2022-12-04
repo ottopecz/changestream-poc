@@ -1,0 +1,29 @@
+{
+  "name": "@converge-exercise/errors",
+  "version": "1.0.0",
+  "description": "Converge exercise - errors library",
+  "main": ".dist/index.js",
+  "types": ".src/index.d.ts",
+  "devDependencies": {},
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint '**/*.{js,ts}'",
+    "lint:fix": "eslint --fix '**/*.{js,ts}'",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+  },
+  "keywords": [
+    "converge",
+    "exercise",
+    "errors"
+  ],
+  "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ottopecz/converge-exercise/issues"
+  },
+  "homepage": "https://github.com/ottopecz/converge-exercise#readme"
+}
