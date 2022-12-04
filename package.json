@@ -28,8 +28,8 @@
   "workspaces": [
     "services/sensor-data",
     "services/notifications",
-    "libraries/logger",
-    "libraries/error-handling"
+    "libraries/errors",
+    "libraries/logger"
   ],
   "devDependencies": {
     "@types/jest": "^29.2.3",
