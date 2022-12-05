@@ -29,7 +29,8 @@
     "services/sensor-data",
     "services/notifications",
     "libraries/errors",
-    "libraries/logger"
+    "libraries/logger",
+    "libraries/mongo-driver"
   ],
   "devDependencies": {
     "@types/jest": "^29.2.3",

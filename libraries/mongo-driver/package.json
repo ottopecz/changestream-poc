@@ -1,0 +1,35 @@
+{
+  "name": "@converge-exercise/mongo-driver",
+  "version": "1.0.0",
+  "description": "Converge exercise - mongo-driver library",
+  "main": ".dist/index.js",
+  "types": ".src/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint '**/*.{js,ts}'",
+    "lint:fix": "eslint --fix '**/*.{js,ts}'",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+  },
+  "keywords": [
+    "converge",
+    "exercise",
+    "mongo-driver"
+  ],
+  "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ottopecz/converge-exercise/issues"
+  },
+  "homepage": "https://github.com/ottopecz/converge-exercise#readme",
+  "dependencies": {
+    "mongodb": "^4.12.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.0"
+  }
+}
