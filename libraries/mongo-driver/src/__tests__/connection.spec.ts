@@ -5,11 +5,11 @@ jest.mock('mongodb')
 
 const mongoClientConnect = MongoClient.connect as jest.Mock
 
-function defer <T>() {
+function defer <T> (): { promise: Promise<T>, resolve: (arg0: T) => void, reject: (arg0: Error) => void } {
   let res: (arg0: T) => void
   let rej: (arg0: Error) => void
 
-  const promise = new Promise((resolve: (arg0: T) => void, reject:(arg0: Error) => void) => {
+  const promise = new Promise((resolve: (arg0: T) => void, reject: (arg0: Error) => void) => {
     res = resolve
     rej = reject
   })
@@ -27,8 +27,10 @@ function defer <T>() {
 
 describe('THE MongoDBDriver', () => {
   const defaultConfig = {
-    hosts: process.env.MONGO_HOSTS || 'localhost:27017',
-    database: 'converge-exercise-test'
+    hosts: process.env.MONGO_HOSTS ?? 'localhost:27017',
+    database: 'converge-exercise-test',
+    username: 'user',
+    password: 'userpassword'
   }
 
   const defaultSRVConfig = {
@@ -45,7 +47,7 @@ describe('THE MongoDBDriver', () => {
   }
 
   const defaultSsl = {
-    sslCertificate: Buffer.from('mock certificate', 'utf8')
+    sslCertificate: Buffer.from('mock certificate', 'utf8').toString()
   }
 
   const mockError = new Error('Mock error')
@@ -69,14 +71,14 @@ describe('THE MongoDBDriver', () => {
       db.mockClear()
       close.mockClear()
       driver = new MongoDBDriver({ ...defaultConfig })
-      mongoClientConnect.mockImplementation(() => Promise.resolve(client))
+      mongoClientConnect.mockImplementation(async () => await Promise.resolve(client))
     })
 
     describe('THE \'connect\' method', () => {
       describe('WHEN the connection is successful', () => {
         it('SHOULD have connected and returned the current connection database', async () => {
           const connection = await driver.connect()
-          const expectedConnectionString = `mongodb://${defaultConfig.hosts}/${defaultConfig.database}`
+          const expectedConnectionString = `mongodb://${defaultConfig.username}:${defaultConfig.password}@${defaultConfig.hosts}/${defaultConfig.database}`
           const expectedConnectionOptions = {}
           expect(MongoClient.connect).toBeCalledWith(expectedConnectionString, expectedConnectionOptions)
           expect(driver.client).toBe(client)
@@ -88,15 +90,14 @@ describe('THE MongoDBDriver', () => {
 
       describe('WHEN the connection is unsuccessful', () => {
         beforeEach(() => {
-          mongoClientConnect.mockImplementation(() => Promise.reject(mockError))
+          mongoClientConnect.mockImplementation(async () => await Promise.reject(mockError))
         })
 
-        it('SHOULD throw an IOError containing a sanitised version of the connection string', () => {
-          expect(driver.connect()).rejects.toThrow(
-            `MongoDBDriver: Error connecting to database: mongodb://${defaultConfig.hosts}/${defaultConfig.database}`
+        it('SHOULD throw an IOError containing a sanitised version of the connection string', async () => {
+          await expect(driver.connect()).rejects.toThrow(
+            `MongoDBDriver: Error connecting to database: mongodb://${defaultConfig.username}@${defaultConfig.hosts}/${defaultConfig.database}`
           )
-        }
-        )
+        })
       })
     })
 
@@ -132,14 +133,14 @@ describe('THE MongoDBDriver', () => {
         const connection = defer()
 
         beforeEach(() => {
-          mongoClientConnect.mockImplementation(() => connection.promise)
+          mongoClientConnect.mockImplementation(async () => await connection.promise)
         })
 
         it('SHOULD create a new pending connection which will resolve to the result of the underlying \'connect\' method', async () => {
           expect(driver.isConnecting).toBeNull()
           const pending = driver.preConnect()
 
-          expect(pending).toBe(driver.isConnecting)
+          expect(pending).toStrictEqual(driver.isConnecting)
           expect(pending).toEqual(expect.any(Promise))
 
           connection.resolve(client)
@@ -155,14 +156,14 @@ describe('THE MongoDBDriver', () => {
         const connection = defer<Db>()
 
         beforeEach(() => {
-          mongoClientConnect.mockImplementation(() => connection.promise)
+          mongoClientConnect.mockImplementation(async () => await connection.promise)
           driver.isConnecting = connection.promise
         })
 
         it('SHOULD return the pending connection which will resolve to the result of the underlying \'connect\' method', async () => {
           const pending = driver.preConnect()
 
-          expect(pending).toBe(driver.isConnecting)
+          expect(pending).toStrictEqual(driver.isConnecting)
           expect(pending).toEqual(expect.any(Promise))
 
           connection.resolve(client as unknown as Db)
@@ -179,20 +180,20 @@ describe('THE MongoDBDriver', () => {
         const connection = defer<Db>()
 
         beforeEach(() => {
-          mongoClientConnect.mockImplementation(() => connection.promise)
+          mongoClientConnect.mockImplementation(async () => await connection.promise)
           driver.isConnecting = connection.promise
         })
 
         it('SHOULD remove the pending connection and forward the error', async () => {
           const pending = driver.preConnect()
 
-          expect(pending).toBe(driver.isConnecting)
+          expect(pending).toStrictEqual(driver.isConnecting)
           expect(pending).toEqual(expect.any(Promise))
 
           connection.reject(mockError)
 
           await expect(pending).rejects.toThrow(
-            `MongoDBDriver: Error connecting to database: mongodb://${defaultConfig.hosts}/${defaultConfig.database}`
+            `MongoDBDriver: Error connecting to database: mongodb://${defaultConfig.username}@${defaultConfig.hosts}/${defaultConfig.database}`
           )
 
           expect(driver.isConnecting).toBeNull()
@@ -224,7 +225,7 @@ describe('THE MongoDBDriver', () => {
 
         it('SHOULD return the pending connection', async () => {
           const pending = driver.getDb()
-          expect(pending).toBe(connection.promise)
+          expect(pending).toStrictEqual(connection.promise)
           connection.resolve(database as unknown as Db)
           const db = await pending
           expect(db).toBe(database)
@@ -235,7 +236,7 @@ describe('THE MongoDBDriver', () => {
       describe('WHEN there is no connection', () => {
         beforeEach(() => {
           jest.spyOn(driver, 'preConnect')
-            .mockImplementation(() => { return Promise.resolve(database) as unknown as Promise<Db> })
+            .mockImplementation(async () => { return await (Promise.resolve(database) as unknown as Promise<Db>) })
         })
 
         it('SHOULD call \'preConnect\' and return the pending connection', async () => {
@@ -256,7 +257,7 @@ describe('THE MongoDBDriver', () => {
 
     beforeEach(() => {
       driver = new MongoDBDriver({ ...defaultConfig, ...defaultAuthConfig })
-      mongoClientConnect.mockImplementation(() => Promise.resolve(client))
+      mongoClientConnect.mockImplementation(async () => await Promise.resolve(client))
     })
 
     describe('THE \'connect\' method', () => {
@@ -283,13 +284,13 @@ describe('THE MongoDBDriver', () => {
 
     beforeEach(() => {
       driver = new MongoDBDriver({ ...defaultConfig, ...defaultTls })
-      mongoClientConnect.mockImplementation(() => Promise.resolve(client))
+      mongoClientConnect.mockImplementation(async () => await Promise.resolve(client))
     })
 
     describe('THE \'connect\' method', () => {
       it('SHOULD connect to the database', async () => {
         const connection = await driver.connect()
-        const expectedConnectionString = `mongodb://${defaultConfig.hosts}/${defaultConfig.database}`
+        const expectedConnectionString = `mongodb://${defaultConfig.username}:${defaultConfig.password}@${defaultConfig.hosts}/${defaultConfig.database}`
         const expectedConnectionOptions = { tls: true, tlsCAFile: defaultTls.tlsCertificateFile }
 
         expect(MongoClient.connect).toBeCalledWith(expectedConnectionString, expectedConnectionOptions)
@@ -310,13 +311,13 @@ describe('THE MongoDBDriver', () => {
 
     beforeEach(() => {
       driver = new MongoDBDriver({ ...defaultConfig, ...defaultSsl })
-      mongoClientConnect.mockImplementation(() => Promise.resolve(client))
+      mongoClientConnect.mockImplementation(async () => await Promise.resolve(client))
     })
 
     describe('THE \'connect\' method', () => {
       it('SHOULD connect to the database', async () => {
         const connection = await driver.connect()
-        const expectedConnectionString = `mongodb://${defaultConfig.hosts}/${defaultConfig.database}`
+        const expectedConnectionString = `mongodb://${defaultConfig.username}:${defaultConfig.password}@${defaultConfig.hosts}/${defaultConfig.database}`
         const expectedConnectionOptions = { ssl: true, sslCA: defaultSsl.sslCertificate }
 
         expect(MongoClient.connect).toBeCalledWith(expectedConnectionString, expectedConnectionOptions)
@@ -337,13 +338,13 @@ describe('THE MongoDBDriver', () => {
 
     beforeEach(() => {
       driver = new MongoDBDriver({ ...defaultConfig, ...defaultSsl, ...defaultTls })
-      mongoClientConnect.mockImplementation(() => Promise.resolve(client))
+      mongoClientConnect.mockImplementation(async () => await Promise.resolve(client))
     })
 
     describe('THE \'connect\' method', () => {
       it('SHOULD connect to the database using only the TLS method', async () => {
         const connection = await driver.connect()
-        const expectedConnectionString = `mongodb://${defaultConfig.hosts}/${defaultConfig.database}`
+        const expectedConnectionString = `mongodb://${defaultConfig.username}:${defaultConfig.password}@${defaultConfig.hosts}/${defaultConfig.database}`
         const expectedConnectionOptions = { tls: true, tlsCAFile: defaultTls.tlsCertificateFile }
 
         expect(MongoClient.connect).toBeCalledWith(expectedConnectionString, expectedConnectionOptions)
@@ -364,13 +365,13 @@ describe('THE MongoDBDriver', () => {
 
     beforeEach(() => {
       driver = new MongoDBDriver({ ...defaultConfig, ...defaultSRVConfig })
-      mongoClientConnect.mockImplementation(() => Promise.resolve(client))
+      mongoClientConnect.mockImplementation(async () => await Promise.resolve(client))
     })
 
     describe('THE \'connect\' method', () => {
       it('SHOULD connect to the database using SRV DNS entry and protocol', async () => {
         const connection = await driver.connect()
-        const expectedConnectionString = `mongodb+srv://${defaultConfig.hosts}/${defaultConfig.database}`
+        const expectedConnectionString = `mongodb+srv://${defaultConfig.username}:${defaultConfig.password}@${defaultConfig.hosts}/${defaultConfig.database}`
 
         expect(MongoClient.connect).toBeCalledWith(expectedConnectionString, {})
         expect(driver.client).toBe(client)

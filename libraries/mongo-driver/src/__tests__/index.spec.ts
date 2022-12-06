@@ -1,30 +1,32 @@
 import { Collection } from 'mongodb'
 import MongoDBDriver from '../'
 
-describe("THE MongoDBDriver", () => {
+describe('THE MongoDBDriver', () => {
   const errMock = new Error('test')
   const nowMockValue = 0
   const collection = 'test'
   const defaultConfig = {
-    hosts: process.env.MONGO_HOSTS || 'localhost:27017',
-    database: 'converge-exercise-test'
+    hosts: process.env.MONGO_HOSTS ?? 'localhost:27017',
+    database: 'converge-exercise-test',
+    username: 'user',
+    password: 'userpassword'
   }
 
   let dateNowSpy: jest.SpyInstance
   beforeAll(() => {
     dateNowSpy = jest.spyOn(Date, 'now').mockImplementation(() => nowMockValue)
-  });
+  })
 
   afterAll(() => {
     dateNowSpy.mockRestore()
-  });
+  })
 
-  describe("WHEN interacting with data", () => {
+  describe('WHEN interacting with data', () => {
     let driver: MongoDBDriver
 
-    beforeEach(() => {
-      driver = new MongoDBDriver({ ...defaultConfig });
-      return driver.connect()
+    beforeEach(async () => {
+      driver = new MongoDBDriver({ ...defaultConfig })
+      return await driver.connect()
     })
 
     afterEach(async () => {
@@ -42,15 +44,15 @@ describe("THE MongoDBDriver", () => {
       describe('WHEN returns with success', () => {
         beforeEach(async () => {
           const db = await driver.getDb()
-          return db.collection(collection).insertMany(records);
+          return await db.collection(collection).insertMany(records)
         })
 
-        afterEach( async () => {
+        afterEach(async () => {
           const db = await driver.getDb()
-          return db.collection(collection).drop()
+          return await db.collection(collection).drop()
         })
 
-        it("SHOULD return an array of documents", async () => {
+        it('SHOULD return an array of documents', async () => {
           const driverRecords = await driver.read({ collection, query })
           expect(driverRecords.length).toEqual(maxItem + 1)
           driverRecords.forEach((current) => {
@@ -62,7 +64,7 @@ describe("THE MongoDBDriver", () => {
       describe('WHEN there is an error during the database read', () => {
         beforeEach(async () => {
           const db = await driver.getDb()
-          const find = jest.fn().mockImplementationOnce(() => Promise.reject(errMock))
+          const find = jest.fn().mockImplementationOnce(async () => await Promise.reject(errMock))
           jest.spyOn(db, 'collection').mockImplementationOnce(() => { return { find } as unknown as Collection })
         })
 
@@ -80,7 +82,7 @@ describe("THE MongoDBDriver", () => {
       describe('WHEN successful', () => {
         afterEach(async () => {
           const db = await driver.getDb()
-          return db.collection(collection).drop()
+          return await db.collection(collection).drop()
         })
 
         it('SHOULD create a single document ' +
@@ -97,12 +99,12 @@ describe("THE MongoDBDriver", () => {
       describe('WHEN there is an error during the database create', () => {
         beforeEach(async () => {
           const db = await driver.getDb()
-          const insertOne = jest.fn().mockImplementationOnce(() => Promise.reject(errMock))
+          const insertOne = jest.fn().mockImplementationOnce(async () => await Promise.reject(errMock))
           jest.spyOn(db, 'collection').mockImplementationOnce(() => { return { insertOne } as unknown as Collection })
         })
 
-        it('SHOULD throw an IOError', () => {
-          return expect(driver.createOne({ collection, doc: { foo: 'bar' } })).rejects.toThrow(
+        it('SHOULD throw an IOError', async () => {
+          return await expect(driver.createOne({ collection, doc: { foo: 'bar' } })).rejects.toThrow(
             `MongoDBDriver: insertOne error: ${JSON.stringify({ collection, document: doc })}`
           )
         })
@@ -111,12 +113,12 @@ describe("THE MongoDBDriver", () => {
       describe('WHEN successful but there is an operation error', () => {
         beforeEach(async () => {
           const db = await driver.getDb()
-          const insertOne = jest.fn().mockImplementationOnce(() => Promise.resolve({ result: { ok: 0, n: 0 }, ops: [] })) // Should be { ok: 1, n: 1 }
-          jest.spyOn(db, 'collection').mockImplementationOnce(() => { return { insertOne } as unknown as Collection } )
+          const insertOne = jest.fn().mockImplementationOnce(async () => await Promise.resolve({ result: { ok: 0, n: 0 }, ops: [] })) // Should be { ok: 1, n: 1 }
+          jest.spyOn(db, 'collection').mockImplementationOnce(() => { return { insertOne } as unknown as Collection })
         })
 
         it('SHOULD throw an IOError', async () => {
-          return expect(driver.createOne({ collection, doc: { foo: 'bar' } })).rejects.toThrow(
+          return await expect(driver.createOne({ collection, doc: { foo: 'bar' } })).rejects.toThrow(
             'MongoDBDriver: the operation hasn\'t executed properly - operationOk: false, oneDocInserted: false'
           )
         })

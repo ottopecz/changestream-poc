@@ -25,29 +25,29 @@ import { IOError } from '@converge-exercise/errors'
  * // [ user1, ..., userN ]
  */
 class MongoDBDriver {
-  private config: { database: any; password: any; sslCertificate: any; hosts: any; isSRVConnection: any; options: any; tlsCertificateFile: any; username: any };
-  public isConnecting: null | Promise<Db>;
-  public client: MongoClient | undefined;
-  public db: Db | undefined;
+  private readonly config: { hosts: string, database: string, username?: string, password?: string, isSRVConnection?: boolean, sslCertificate?: string, tlsCertificateFile?: string, options?: { [p: string]: unknown } }
+  public isConnecting: null | Promise<Db>
+  public client: MongoClient | undefined
+  public db: Db | undefined
 
   constructor ({
-     hosts,
-     database,
-     username,
-     password,
-     isSRVConnection = false,
-     sslCertificate,
-     tlsCertificateFile,
-     options
+    hosts,
+    database,
+    username,
+    password,
+    isSRVConnection = false,
+    sslCertificate,
+    tlsCertificateFile,
+    options
   }: {
-    hosts: string;
-    database: string;
-    username?: string;
-    password?: string;
-    isSRVConnection?: boolean,
-    sslCertificate?: Buffer;
-    tlsCertificateFile?: string;
-    options?: {[p: string]: unknown}
+    hosts: string
+    database: string
+    username?: string
+    password?: string
+    isSRVConnection?: boolean
+    sslCertificate?: string
+    tlsCertificateFile?: string
+    options?: { [p: string]: unknown }
   }) {
     assert(hosts, 'MongoDBDriver: No hosts supplied to config')
     assert(database, 'MongoDBDriver: No database supplied to config')
@@ -66,13 +66,13 @@ class MongoDBDriver {
   /**
    * Begin the connection process, save the pending promise on this.isConnecting
    */
-  public preConnect (): Promise<Db> {
+  public async preConnect (): Promise<Db> {
     this.isConnecting = this.connect()
       .finally(() => {
         this.isConnecting = null
       })
 
-    return this.isConnecting
+    return await this.isConnecting
   }
 
   /**
@@ -135,22 +135,22 @@ class MongoDBDriver {
   /**
    * Close the currently open connection
    */
-  close (): Promise<void> {
-    if (this.client) {
-      return this.client.close(true)
+  async close (): Promise<void> {
+    if (this.client != null) {
+      return await this.client.close(true)
     }
-    return Promise.resolve()
+    return await Promise.resolve()
   }
 
   /**
    * Get a connection
    */
-  getDb (): Promise<Db> {
+  async getDb (): Promise<Db> {
     if (this.client && this.db) {
       return Promise.resolve(this.db)
     }
 
-    return this.isConnecting || this.preConnect()
+    return (this.isConnecting ?? this.preConnect())
   }
 
   /**
@@ -162,11 +162,11 @@ class MongoDBDriver {
     skip = 0,
     limit = 100
   }: {
-    collection: string;
-    query: {[p: string]: unknown};
-    skip?: number;
-    limit?: number;
-  }): Promise<Array<{[p: string]: unknown}>> {
+    collection: string
+    query: { [p: string]: unknown }
+    skip?: number
+    limit?: number
+  }): Promise<Array<{ [p: string]: unknown }>> {
     let cursor
     try {
       const db: Db = await this.getDb()
@@ -176,7 +176,7 @@ class MongoDBDriver {
       throw new IOError(message, { origError: origError as Error })
     }
 
-    return cursor
+    return await cursor
       .project({ _id: 0 })
       .skip(skip)
       .limit(limit)
@@ -186,7 +186,7 @@ class MongoDBDriver {
   /**
    * Create a single document
    */
-  async createOne ({ collection, doc }: { collection: string , doc: {[p: string]: unknown} }): Promise<{[p: string]: unknown}> {
+  async createOne ({ collection, doc }: { collection: string, doc: { [p: string]: unknown } }): Promise<{ [p: string]: unknown }> {
     const clonedDoc = { ...doc }
     clonedDoc.createdAt = new Date(Date.now())
     clonedDoc.updatedAt = new Date(Date.now())
@@ -200,12 +200,12 @@ class MongoDBDriver {
       throw new IOError(message, { origError: origError as Error })
     }
     const { acknowledged, insertedId } = res
-    const operationOk = (acknowledged === true)
+    const operationOk = Boolean(acknowledged)
     const oneDocInserted = (typeof insertedId === 'object')
     const isOperationalError = !(operationOk && oneDocInserted)
 
     if (isOperationalError) {
-      throw new IOError(`MongoDBDriver: the operation hasn't executed properly - operationOk: ${operationOk}, oneDocInserted: ${oneDocInserted}`)
+      throw new IOError(`MongoDBDriver: the operation hasn't executed properly - operationOk: ${operationOk.toString()}, oneDocInserted: ${oneDocInserted.toString()}`)
     }
 
     return clonedDoc
