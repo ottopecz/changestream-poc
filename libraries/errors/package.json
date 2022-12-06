@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Converge exercise - errors library",
   "main": ".dist/index.js",
-  "types": ".src/index.d.ts",
+  "types": "src/index.d.ts",
   "devDependencies": {},
   "scripts": {
     "build": "tsc",
