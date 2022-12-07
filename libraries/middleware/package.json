@@ -1,0 +1,38 @@
+{
+  "name": "@converge-exercise/middleware",
+  "version": "1.0.0",
+  "description": "Converge exercise - middleware library",
+  "main": ".dist/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint '**/*.{js,ts}'",
+    "lint:fix": "eslint --fix '**/*.{js,ts}'",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+  },
+  "keywords": [
+    "converge",
+    "exercise",
+    "middleware"
+  ],
+  "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ottopecz/converge-exercise/issues"
+  },
+  "homepage": "https://github.com/ottopecz/converge-exercise#readme",
+  "dependencies": {
+    "@aws-sdk/client-cloudwatch": "^3.224.0",
+    "aws-xray-sdk": "^3.4.0",
+    "express-openapi-validator": "^5.0.0",
+    "response-time": "^2.3.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/response-time": "^2.3.5"
+  }
+}
