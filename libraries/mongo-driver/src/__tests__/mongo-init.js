@@ -1,11 +1,12 @@
+// eslint-disable-next-line
 db.createUser(
   {
-    user: "user",
-    pwd: "userpassword",
+    user: 'user',
+    pwd: 'userpassword',
     roles: [
       {
-        role: "readWrite",
-        db: "converge-exercise-test"
+        role: 'readWrite',
+        db: 'converge-exercise-test'
       }
     ]
   }

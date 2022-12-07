@@ -88,21 +88,30 @@ class MongoDBDriver {
       sslCertificate,
       tlsCertificateFile,
       options = {}
+    }: {
+      isSRVConnection?: boolean
+      hosts: string
+      database: string
+      username?: string
+      password?: string
+      sslCertificate?: string
+      tlsCertificateFile?: string
+      options?: { [p: string]: unknown }
     } = this.config
 
-    const protocol = isSRVConnection
+    const protocol = (isSRVConnection !== undefined) && isSRVConnection
       ? 'mongodb+srv'
       : 'mongodb'
 
-    const sslOptions = sslCertificate && !tlsCertificateFile
+    const sslOptions = (sslCertificate !== undefined && Boolean(sslCertificate)) && (tlsCertificateFile === undefined)
       ? { ssl: true, sslCA: sslCertificate }
       : {}
 
-    const tlsOptions = tlsCertificateFile
+    const tlsOptions = tlsCertificateFile !== undefined && Boolean(tlsCertificateFile)
       ? { tls: true, tlsCAFile: tlsCertificateFile }
       : {}
 
-    const connectionOptions = isSRVConnection
+    const connectionOptions = (isSRVConnection !== undefined) && isSRVConnection
       ? {
           ...options
         }
@@ -113,7 +122,9 @@ class MongoDBDriver {
           ...options
         }
 
-    const connectionAuth = username && password ? `${encodeURIComponent(username)}:${encodeURIComponent(password)}@` : ''
+    const connectionAuth = (username !== undefined) && Boolean(username) && (password !== undefined) && Boolean(password)
+      ? `${encodeURIComponent(username)}:${encodeURIComponent(password)}@`
+      : ''
     // We assert there should always be a connection database in the constructor
     const connectionDatabase = `/${database}`
     const connectionString = `${protocol}://${connectionAuth}${connectionHosts}${connectionDatabase}`
@@ -146,11 +157,11 @@ class MongoDBDriver {
    * Get a connection
    */
   async getDb (): Promise<Db> {
-    if (this.client && this.db) {
-      return Promise.resolve(this.db)
+    if (this.client !== undefined && this.db !== undefined) {
+      return this.db
     }
 
-    return (this.isConnecting ?? this.preConnect())
+    return await (this.isConnecting ?? this.preConnect())
   }
 
   /**
