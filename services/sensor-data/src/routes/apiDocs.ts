@@ -8,12 +8,13 @@ import openApiDocument from '../apiSpec'
 const readFile = promisify(fs.readFile)
 const router = Router()
 
-router.get('/json', (req: Request, res: Response) => {
+router.get('/json', (req: Request, res: Response): void => {
   res.setHeader('Content-Type', 'application/json')
   res.status(200).send(openApiDocument)
 })
 
-router.get('/html', (req: Request, res: Response) => {
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
+router.get('/html', async (req: Request, res: Response) => {
   let html
   try {
     html = await readFile(path.resolve(__dirname, '..', 'apiSpec', 'index.html'))
