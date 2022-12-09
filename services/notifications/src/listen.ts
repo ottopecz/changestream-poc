@@ -1,3 +1,1 @@
-import { logger } from '@converge-exercise/logger'
-
-logger.info('notifications service')
+console.info('notifications service')
