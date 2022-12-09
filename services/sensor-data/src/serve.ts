@@ -1,9 +1,8 @@
 import * as dotenv from 'dotenv'
-dotenv.config()
 import express from 'express'
 import type { Express } from 'express'
 
-import { middleware as OpenApiValidatorMiddleware  } from 'express-openapi-validator'
+import { middleware as OpenApiValidatorMiddleware } from 'express-openapi-validator'
 import { openApiErrorHandler } from '@converge-exercise/middleware'
 import openApiDocument from './apiSpec'
 import { config, configValidator } from './config'
@@ -11,6 +10,7 @@ import { logger } from './singletons'
 import apiDocs from './routes/apiDocs'
 import rootRouter from './routes/root'
 import uptimeRouter from './routes/uptime'
+dotenv.config()
 
 const app: Express = express()
 const { port } = configValidator(config)
@@ -42,11 +42,13 @@ if (require.main === module) {
       server.close(() => process.exit(0))
     })
     .on('uncaughtException', (error: Error) => {
-      logger.error(`Uncaught Exception: ${error.message || error}`, error)
+      const errorMessage: string = (error.message !== '') ? `Uncaught Exception: ${error.message}` : 'Uncaught Exception'
+      logger.error(errorMessage, error)
       server.close(() => process.exit(1))
     })
     .on('unhandledRejection', (error: Error) => {
-      logger.error(`Unhandled Rejection: ${error.message || error}`, error)
+      const errorMessage: string = (error.message !== '') ? `Uncaught Exception: ${error.message}` : 'Uncaught Exception'
+      logger.error(errorMessage, error)
       server.close(() => process.exit(1))
     })
 }

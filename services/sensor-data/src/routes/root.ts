@@ -1,9 +1,10 @@
 import { Router } from 'express'
-import { logger } from '../singletons'
+import type { Request, Response } from 'express'
+// import { logger } from '../singletons'
 
 const router = Router()
 
-router.get('/', async (req, res) => {
+router.get('/', (req: Request, res: Response) => {
   res.setHeader('Content-Type', 'plain/text')
 
   // let condition = 'available'
