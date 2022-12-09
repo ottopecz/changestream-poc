@@ -24,8 +24,7 @@ function isOpenApiError ({ status, message, errors }: NativeValidationError): Bo
   )
 }
 
-export default function openApiErrorHandler (err: NativeValidationError, req: Request, res: Response, next: NextFunction): void {
-  // eslint-disable-next-line
+export function openApiErrorHandler (err: any, req: Request, res: Response, next: NextFunction): void {
   if (isOpenApiError(err)) {
     const { status, message, errors } = err
     logger.error('The request failed validation', new ValidationError(message ?? 'An error occurred validating request', { origErrors: errors }))
