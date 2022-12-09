@@ -1,0 +1,11 @@
+{
+  "name": "Mock Stream",
+  "onlinePlatform": "Zoom",
+  "onlineSessionDetails": "https://zoom.com/best-meeting-evet",
+  "roles": [
+    {
+      "customerId": "2518a134-6a10-4330-8893-aebfd2a6cd00",
+      "type": "speaker"
+    }
+  ]
+}

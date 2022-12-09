@@ -1,0 +1,42 @@
+{
+  "assessmentInformation": "This unit is assessed, please see the Guidance Notes for details",
+  "courseMaterials": [
+    {
+      "tags": [],
+      "file": {
+        "extension": "pdf",
+        "mimeType": "application/pdf",
+        "originalFilename": "Mock file.pdf",
+        "size": 1000,
+        "url": "https://foo.com/mock-file.pdf"
+      }
+    }
+  ],
+  "courseType": "Training Course",
+  "cpdHours": 8,
+  "image": "https://mock-site/mock-image.jpg",
+  "overviewInformation": "## The UK's leading legal training and information company specifically for non-lawyers.\n\n> \"Bond Solon in just one session transformed an over confident and impatient CEO into a calm and thoughtful witness who impressed the tribunal.\"  \n  \nAudley Sheppard, QC, Clifford Chance\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/fp-52d4HxtY\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n\n<iframe id=\"kaltura_player_1596109113\" src=\"https://cdnapisec.kaltura.com/p/1932941/sp/193294100/embedIframeJs/uiconf_id/45885281/partner_id/1932941?iframeembed=true&playerId=kaltura_player_1596109113&entry_id=1_uwaulaxk\" width=\"720\" height=\"480\" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow=\"autoplay *; fullscreen *; encrypted-media *\" frameborder=\"0\"></iframe>",
+  "path": "excellence-in-report-writing-written-evidence",
+  "preCourseworkInformation": "## The UK's leading legal training and information company specifically for non-lawyers.\n\n> \"Bond Solon in just one session transformed an over confident and impatient CEO into a calm and thoughtful witness who impressed the tribunal.\"  \n  \nAudley Sheppard, QC, Clifford Chance\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/fp-52d4HxtY\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n\n<iframe id=\"kaltura_player_1596109113\" src=\"https://cdnapisec.kaltura.com/p/1932941/sp/193294100/embedIframeJs/uiconf_id/45885281/partner_id/1932941?iframeembed=true&playerId=kaltura_player_1596109113&entry_id=1_uwaulaxk\" width=\"720\" height=\"480\" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow=\"autoplay *; fullscreen *; encrypted-media *\" frameborder=\"0\"></iframe>",
+  "preCourseworkInformationSummary": "## The UK's leading legal training and information company specifically for non-lawyers.\n\n> \"Bond Solon in just one session transformed an over confident and impatient CEO into a calm and thoughtful witness who impressed the tribunal.\"  \n  \nAudley Sheppard, QC, Clifford Chance\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/fp-52d4HxtY\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n\n<iframe id=\"kaltura_player_1596109113\" src=\"https://cdnapisec.kaltura.com/p/1932941/sp/193294100/embedIframeJs/uiconf_id/45885281/partner_id/1932941?iframeembed=true&playerId=kaltura_player_1596109113&entry_id=1_uwaulaxk\" width=\"720\" height=\"480\" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow=\"autoplay *; fullscreen *; encrypted-media *\" frameborder=\"0\"></iframe>",
+  "preCoursework": true,
+  "preSaleInformation": "## The UK's leading legal training and information company specifically for non-lawyers.\n\n> \"Bond Solon in just one session transformed an over confident and impatient CEO into a calm and thoughtful witness who impressed the tribunal.\"  \n  \nAudley Sheppard, QC, Clifford Chance\n\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/fp-52d4HxtY\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n\n<iframe id=\"kaltura_player_1596109113\" src=\"https://cdnapisec.kaltura.com/p/1932941/sp/193294100/embedIframeJs/uiconf_id/45885281/partner_id/1932941?iframeembed=true&playerId=kaltura_player_1596109113&entry_id=1_uwaulaxk\" width=\"720\" height=\"480\" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow=\"autoplay *; fullscreen *; encrypted-media *\" frameborder=\"0\"></iframe>",
+  "preSaleLink": "https://mock-site/link",
+  "relatedResourceContent": [
+    "mock"
+  ],
+  "relatedCourseContent": [
+    "mock"
+  ],
+  "tags": ["mock tag"],
+  "testimonials": [
+    {
+      "citationAdditional": "Paediatric Neurology - UH Bristol NHS Trust",
+      "citationAuthor": "Andrew Mallick",
+      "citationAvatar": "https://mock-site/mock-image.jpg",
+      "text": "This was the perfect course to help me build on what I’d gained from 2 years’ experience of writing reports.",
+      "tags": ["mock tag"]
+    }
+  ],
+  "title": "Excellence in Report Writing - Written Evidence"
+}
