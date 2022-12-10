@@ -14,7 +14,7 @@ export const config = Object.freeze({
   }
 })
 
-export function configValidator ({
+export function configProvider ({
   nodeEnv,
   port,
   logging,
@@ -93,12 +93,8 @@ export function configValidator ({
   }
 
   if (mongo.isSRVConnection === 'True') { mongoRes.isSRVConnection = true }
-  if (mongo.username !== undefined) {
-    mongoRes.username = mongo.username
-  }
-  if (mongo.password !== undefined) {
-    mongoRes.password = mongo.password
-  }
+  if (mongo.username !== undefined) { mongoRes.username = mongo.username }
+  if (mongo.password !== undefined) { mongoRes.password = mongo.password }
 
   if (mongo.options !== undefined) {
     let parsedMongoOptions
@@ -111,10 +107,10 @@ export function configValidator ({
     mongoRes.options = parsedMongoOptions
   }
 
-  return {
+  return Object.freeze({
     nodeEnv,
     port: parseInt(port, 10),
     logging: { level: logging.level },
     mongo: mongoRes
-  }
+  })
 }

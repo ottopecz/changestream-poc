@@ -1,29 +1,16 @@
 import supertest from 'supertest'
+import MongoDBDriver from '@converge-exercise/mongo-driver'
+import app from '../../app'
 
-let app
+jest.mock('@converge-exercise/mongo-driver')
 
-const mongoGetDb = jest.fn()
-
-beforeAll(() => {
-  jest.doMock('@wss-dh/wss.web.package.mongodbdriver', () => {
-    return class MockMongoDBDriver {
-      getDb (...args) {
-        return mongoGetDb(...args)
-      }
-    }
-  })
-  app = require('../../app').default
-})
-
-afterAll(() => {
-  jest.resetModules()
-})
+const mongoDBDriverGetDb = MongoDBDriver.prototype.getDb as jest.Mock
 
 describe('THE / endpoint', () => {
   describe('WHEN a GET request is made ', () => {
     describe('AND the MongoDBDriver returns a database', () => {
       beforeEach(() => {
-        mongoGetDb.mockImplementation(() => Promise.resolve('database'))
+        mongoDBDriverGetDb.mockResolvedValueOnce('whatever')
       })
 
       it('SHOULD respond with 200 ' +
@@ -33,13 +20,13 @@ describe('THE / endpoint', () => {
           .get('/')
           .expect(200)
 
-        expect(text).toEqual('WSS.Web.App.RegMan - Database is available')
+        expect(text).toEqual('Sensor Data Service - Database is available')
       })
     })
 
     describe('AND the MongoDBDriver throws an error ', () => {
       beforeEach(() => {
-        mongoGetDb.mockImplementation(() => Promise.reject(new Error()))
+        mongoDBDriverGetDb.mockRejectedValueOnce(new Error('test')) // The concept of returning awaited promises is just wrong
       })
 
       it('SHOULD respond with 200 ' +
@@ -49,7 +36,7 @@ describe('THE / endpoint', () => {
           .get('/')
           .expect(200)
 
-        expect(text).toEqual('WSS.Web.App.RegMan - Database is unavailable')
+        expect(text).toEqual('Sensor Data Service - Database is unavailable')
       })
     })
   })

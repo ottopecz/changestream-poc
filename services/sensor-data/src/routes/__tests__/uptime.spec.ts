@@ -1,10 +1,5 @@
 import supertest from 'supertest'
-
-let app
-
-beforeAll(() => {
-  app = require('../../app').default
-})
+import app from '../../app'
 
 describe('THE /uptime endpoint', () => {
   describe('WHEN a GET request is made ', () => {

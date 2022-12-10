@@ -9,21 +9,28 @@ const readFile = promisify(fs.readFile)
 const router = Router()
 
 router.get('/json', (req: Request, res: Response): void => {
-  res.setHeader('Content-Type', 'application/json')
-  res.status(200).send(openApiDocument)
+  res
+    .set('Content-Type', 'application/json')
+    .status(200)
+    .send(openApiDocument).end()
 })
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
-router.get('/html', async (req: Request, res: Response) => {
+// O express types, express types - wherefore art thou...?
+router.get('/html', async (req: Request, res: Response): Promise<void> => { // eslint-disable-line @typescript-eslint/no-misused-promises
   let html
   try {
     html = await readFile(path.resolve(__dirname, '..', 'apiSpec', 'index.html'))
   } catch (error) {
-    res.status(503).send()
+    res
+      .status(503)
+      .end()
     return
   }
-  res.setHeader('Content-Type', 'text/html')
-  res.status(200).send(html)
+
+  res
+    .set('Content-Type', 'text/html')
+    .status(200)
+    .send(html)
 })
 
 export default router
