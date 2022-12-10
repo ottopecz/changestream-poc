@@ -6,7 +6,7 @@ db.createUser(
     roles: [
       {
         role: 'readWrite',
-        db: 'converge-exercise-test'
+        db: 'converge-exercise_mongo-test-db'
       }
     ]
   }

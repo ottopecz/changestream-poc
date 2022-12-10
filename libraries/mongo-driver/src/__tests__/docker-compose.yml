@@ -1,16 +1,15 @@
-# vi docker-compose.yml
 version: '3'
 services:
   mongo:
     ports:
       - '27017:27017'
     restart: always
-    container_name: mongo-test
+    container_name: converge-exercise_mongo-test-db
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-      - /var/lib/mongodb/data/db:/data/db
+      - /Users/ottopecz/Development/data/converge-exercise_mongo-test-db:/data/db
     environment:
-      - MONGO_INITDB_DATABASE=converge-exercise-test
+      - MONGO_INITDB_DATABASE=converge-exercise_mongo-test-db
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=rootpassword
     image: mongo:latest

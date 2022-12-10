@@ -7,7 +7,7 @@ describe('THE MongoDBDriver', () => {
   const collection = 'test'
   const defaultConfig = {
     hosts: process.env.MONGO_HOSTS ?? 'localhost:27017',
-    database: 'converge-exercise-test',
+    database: 'converge-exercise_mongo-test-db',
     username: 'user',
     password: 'userpassword'
   }
