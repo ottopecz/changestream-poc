@@ -1,5 +1,17 @@
-const baseConfig = require('../../jest.config.js')
+const baseConfig = require('../../jest.config')
 
 module.exports = {
-  ...baseConfig
+  ...baseConfig,
+  setupFilesAfterEnv: [
+    './jest.setup'
+  ],
+  globalSetup: './src/routes/__tests__/__utils__/global-setup.ts',
+  globalTeardown: './src/routes/__tests__/__utils__/global-teardown.ts',
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/.dist/',
+    './src/routes/__tests__/__utils__/global-setup.ts',
+    './src/routes/__tests__/__utils__/global-teardown.ts',
+    './src/routes/__tests__/__utils__/mongo-init.js'
+  ]
 }
