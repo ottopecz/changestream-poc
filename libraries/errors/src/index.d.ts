@@ -1,5 +1,24 @@
 declare module '@converge-exercise/errors' {
 
+  /** Represents an error which indicates a conflict */
+  export declare class ConflictError extends Error {
+    readonly errorMessage: string
+    readonly origError: Error | undefined
+    readonly statusCode: number | undefined
+    readonly errorCode: string | undefined
+    readonly context: {
+      [p: string]: unknown
+    } | undefined
+    constructor (message: string, { origError, statusCode, errorCode, context }?: {
+      origError?: Error
+      statusCode?: number
+      errorCode?: string
+      context?: {
+        [p: string]: unknown
+      }
+    })
+  }
+
   /** Represents an error which occurs during IO operations */
   export declare class IOError extends Error {
     readonly errorMessage: string
