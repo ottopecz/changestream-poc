@@ -5,9 +5,10 @@ import { middleware as OpenApiValidatorMiddleware } from 'express-openapi-valida
 import { openApiErrorHandler } from '@converge-exercise/middleware'
 
 import openApiDocument from './apiSpec'
-import apiDocs from './routes/apiDocs'
+import apiDocsRouter from './routes/apiDocs'
 import rootRouter from './routes/root'
 import uptimeRouter from './routes/uptime'
+import sensorDataRouter from './routes/sensorData'
 
 const app: Express = express()
 
@@ -23,7 +24,8 @@ app.use(OpenApiValidatorMiddleware({
 /** Routers */
 app.use('/', rootRouter)
 app.use('/uptime', uptimeRouter)
-app.use('/api-docs', apiDocs)
+app.use('/api-docs', apiDocsRouter)
+app.use('/data', sensorDataRouter)
 
 /** Error handlers */
 app.use(openApiErrorHandler)

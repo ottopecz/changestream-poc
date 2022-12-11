@@ -1,0 +1,14 @@
+services:
+  mongo:
+    ports:
+      - '27017:27017'
+    restart: always
+    container_name: converge-exercise_dev-db
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - /Users/ottopecz/Development/data/converge-exercise_dev-db:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=converge-exercise_dev-db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootpassword
+    image: mongo:latest
