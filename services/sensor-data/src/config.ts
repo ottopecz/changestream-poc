@@ -11,6 +11,9 @@ export const config = Object.freeze({
     username: process.env.MONGO_USERNAME,
     password: process.env.MONGO_PASSWORD,
     options: process.env.MONGO_OPTIONS
+  },
+  sensorData: {
+    resourceName: process.env.MONGO_RESOURCE_NAME
   }
 })
 
@@ -18,11 +21,12 @@ export function configProvider ({
   nodeEnv,
   port,
   logging,
-  mongo
+  mongo,
+  sensorData
 }: {
   nodeEnv: unknown
   port: unknown
-  logging: { 'level': unknown }
+  logging: { level: unknown }
   mongo: {
     hosts: unknown
     database: unknown
@@ -31,10 +35,11 @@ export function configProvider ({
     password: unknown
     options: unknown
   }
+  sensorData: { resourceName: unknown }
 }): {
     nodeEnv: string
     port: number
-    logging: { 'level': string }
+    logging: { level: string }
     mongo: {
       hosts: string
       database: string
@@ -43,6 +48,7 @@ export function configProvider ({
       password?: string
       options?: { [p: string ]: unknown }
     }
+    sensorData: { resourceName: string }
   } {
   if (typeof nodeEnv !== 'string') {
     throw new TypeError('The type of nodeEnv has to be a string')
@@ -107,10 +113,15 @@ export function configProvider ({
     mongoRes.options = parsedMongoOptions
   }
 
+  if (typeof sensorData.resourceName !== 'string') {
+    throw new TypeError('The type of logging.level has to be a string')
+  }
+
   return Object.freeze({
     nodeEnv,
     port: parseInt(port, 10),
     logging: { level: logging.level },
-    mongo: mongoRes
+    mongo: mongoRes,
+    sensorData: { resourceName: sensorData.resourceName }
   })
 }

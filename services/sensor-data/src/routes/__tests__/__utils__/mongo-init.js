@@ -10,3 +10,7 @@ db.createUser( // eslint-disable-line no-undef
     ]
   }
 )
+db['sensor-data'].createIndex( // eslint-disable-line no-undef
+  { sensorId: 1, time: 1 },
+  { unique: true }
+)

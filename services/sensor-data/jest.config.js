@@ -10,8 +10,6 @@ module.exports = {
   testPathIgnorePatterns: [
     '/node_modules/',
     '/.dist/',
-    './src/routes/__tests__/__utils__/global-setup.ts',
-    './src/routes/__tests__/__utils__/global-teardown.ts',
-    './src/routes/__tests__/__utils__/mongo-init.js'
+    './src/routes/__tests__/__utils__/*'
   ]
 }

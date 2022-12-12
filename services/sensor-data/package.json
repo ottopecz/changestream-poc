@@ -9,8 +9,8 @@
     "build": "npm run clean && tsc && npm run copy-files",
     "lint": "eslint '**/*.{js,ts}'",
     "lint:fix": "eslint --fix '**/*.{js,ts}'",
-    "test": "jest",
-    "start": "node .dist/start.js"
+    "test": "jest --detectOpenHandles",
+    "start": "npm run build && node .dist/start.js"
   },
   "keywords": [
     "converge",
@@ -47,6 +47,7 @@
     "docker-compose": "^0.23.17",
     "dotenv": "^16.0.3",
     "rimraf": "^3.0.2",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "uuid": "^9.0.0"
   }
 }

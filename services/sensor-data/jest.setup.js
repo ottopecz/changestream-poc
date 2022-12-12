@@ -12,6 +12,7 @@ process.env.MONGO_HOSTS = 'localhost'
 process.env.MONGO_DATABASE = 'converge-exercise_test-db'
 process.env.MONGO_USERNAME = 'user'
 process.env.MONGO_PASSWORD = 'userpassword'
+process.env.MONGO_RESOURCE_NAME = 'sensor-data'
 
 // Mock logger package
 jest.mock('@converge-exercise/logger', () => {

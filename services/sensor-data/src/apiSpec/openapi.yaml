@@ -61,7 +61,7 @@ paths:
       description: Add new Sensor Data
       operationId: addSensorData
       requestBody:
-        description: New Sensor Data To Add
+        description: New Sensor Data to add
         content:
           application/json:
             schema:
