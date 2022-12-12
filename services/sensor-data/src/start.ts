@@ -7,23 +7,23 @@ import { logger } from './singletons'
 /* eslint-enable import/first */
 
 const { port } = configProvider(config)
-const server = server.listen(port, () => logger.info(`App listening on port ${port}!`))
+const runningServer = server.listen(port, () => logger.info(`App listening on port ${port}!`))
 process
   .on('SIGTERM', () => {
     logger.info('SIGTERM received')
-    server.close(() => process.exit(0))
+    runningServer.close(() => process.exit(0))
   })
   .on('SIGINT', () => {
     logger.info('SIGINT received')
-    server.close(() => process.exit(0))
+    runningServer.close(() => process.exit(0))
   })
   .on('uncaughtException', (error: Error) => {
     const errorMessage: string = (error.message !== '') ? `Uncaught Exception: ${error.message}` : 'Uncaught Exception'
     logger.error(errorMessage, error)
-    server.close(() => process.exit(1))
+    runningServer.close(() => process.exit(1))
   })
   .on('unhandledRejection', (error: Error) => {
     const errorMessage: string = (error.message !== '') ? `Uncaught Exception: ${error.message}` : 'Uncaught Exception'
     logger.error(errorMessage, error)
-    server.close(() => process.exit(1))
+    runningServer.close(() => process.exit(1))
   })
