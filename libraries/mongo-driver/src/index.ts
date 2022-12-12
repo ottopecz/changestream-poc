@@ -210,9 +210,10 @@ class MongoDBDriver {
       const message = `MongoDBDriver: insertOne error: ${JSON.stringify({ collection, document: doc })}`
       throw new IOError(message, { origError: origError as Error })
     }
+    debugger
     const { acknowledged, insertedId } = res
     const operationOk = Boolean(acknowledged)
-    const oneDocInserted = (typeof insertedId === 'object')
+    const oneDocInserted = Boolean(insertedId)
     const isOperationalError = !(operationOk && oneDocInserted)
 
     if (isOperationalError) {
