@@ -25,8 +25,7 @@ function isOpenApiError ({ status, message, errors }: NativeValidationError): Bo
 }
 
 export function openApiErrorHandler (err: any, req: Request, res: Response, next: NextFunction): void {
-  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-  if (isOpenApiError(err)) {
+  if (isOpenApiError(err)) { // eslint-disable-line @typescript-eslint/strict-boolean-expressions
     const { status, message, errors } = err
     logger.error('The request failed validation', new ValidationError(message ?? 'An error occurred validating request', { origErrors: errors }))
     res.status(status).json({ message, errors })
