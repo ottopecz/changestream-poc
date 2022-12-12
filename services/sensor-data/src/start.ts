@@ -1,13 +1,13 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 /* eslint-disable import/first */
-import app from './app'
+import server from './server'
 import { config, configProvider } from './config'
 import { logger } from './singletons'
 /* eslint-enable import/first */
 
 const { port } = configProvider(config)
-const server = app.listen(port, () => logger.info(`App listening on port ${port}!`))
+const server = server.listen(port, () => logger.info(`App listening on port ${port}!`))
 process
   .on('SIGTERM', () => {
     logger.info('SIGTERM received')

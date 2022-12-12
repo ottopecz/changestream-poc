@@ -1,6 +1,6 @@
 import supertest from 'supertest'
 import { Express } from 'express'
-import server from '../../app'
+import server from '../../server'
 import { MongoClient } from 'mongodb'
 import { IOError } from '@converge-exercise/errors'
 import { config, configProvider } from '../../config'

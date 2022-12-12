@@ -1,6 +1,6 @@
 import supertest from 'supertest'
 import MongoDBDriver from '@converge-exercise/mongo-driver'
-import app from '../../app'
+import server from '../../server'
 
 jest.mock('@converge-exercise/mongo-driver')
 
@@ -16,7 +16,7 @@ describe('THE / endpoint', () => {
       it('SHOULD respond with 200 ' +
         'AND return the name of the app ' +
         'AND report the availability of the dependency', async () => {
-        const { text } = await supertest(app)
+        const { text } = await supertest(server)
           .get('/')
           .expect(200)
 
@@ -32,7 +32,7 @@ describe('THE / endpoint', () => {
       it('SHOULD respond with 200 ' +
         'AND return the name of the app ' +
         'AND report the availability of the dependency', async () => {
-        const { text } = await supertest(app)
+        const { text } = await supertest(server)
           .get('/')
           .expect(200)
 
