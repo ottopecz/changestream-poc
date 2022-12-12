@@ -197,7 +197,11 @@ class MongoDBDriver {
   /**
    * Create a single document
    */
-  async createOne ({ collection, doc }: { collection: string, doc: { [p: string]: unknown } }): Promise<{ [p: string]: unknown }> {
+
+  async createOne ({
+    collection,
+    doc
+  }: { collection: string, doc: { [p: string]: unknown } }): Promise<{ [p: string]: unknown }> {
     const clonedDoc = { ...doc }
     clonedDoc.createdAt = new Date(Date.now())
     clonedDoc.updatedAt = new Date(Date.now())
@@ -210,7 +214,6 @@ class MongoDBDriver {
       const message = `MongoDBDriver: insertOne error: ${JSON.stringify({ collection, document: doc })}`
       throw new IOError(message, { origError: origError as Error })
     }
-    debugger
     const { acknowledged, insertedId } = res
     const operationOk = Boolean(acknowledged)
     const oneDocInserted = Boolean(insertedId)
