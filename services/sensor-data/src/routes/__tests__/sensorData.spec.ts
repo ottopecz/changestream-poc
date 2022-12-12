@@ -1,5 +1,5 @@
 import supertest from 'supertest'
-import type { Response } from 'express'
+import { Express } from 'express'
 import server from '../../app'
 import { MongoClient } from 'mongodb'
 import { IOError } from '@converge-exercise/errors'
@@ -15,7 +15,7 @@ jest.mock('@converge-exercise/mongo-driver', () => {
   return origModule
 })
 
-export interface TypedRequestBody<T> extends Express.Request {
+export interface TypedResponseBody<T> extends Express.Response {
   body: T
 }
 
@@ -183,7 +183,7 @@ describe('THE /data endpoint', () => {
       describe('AND there is no document in the database which matches the query', () => {
         it('SHOULD respond with 200 ' +
           'AND return an empty array', async () => {
-          const results: TypedRequestBody<SensorDataType[]> = await supertest(server)
+          const results: TypedResponseBody<SensorDataType[]> = await supertest(server)
             .get('/data')
             .query(validQuery)
             .expect(200)
@@ -202,14 +202,14 @@ describe('THE /data endpoint', () => {
 
         it('SHOULD respond with 200 ' +
           'and return the queried documents', async () => {
-          const results: TypedRequestBody<SensorDataType[]> = await supertest(server)
+          const results: TypedResponseBody<SensorDataType[]> = await supertest(server)
             .get('/data')
             .query(validQuery)
             .expect(200)
 
           expect(results.body.length).toBe(docsToWrite.length)
-          // expect(results.body[0]).toStrictEqual({ ...sensorData })
-          // expect(results.body[1]).toStrictEqual({ ...sensorData, time: 1670682969884 })
+          expect(results.body[0]).toStrictEqual({ ...sensorData })
+          expect(results.body[1]).toStrictEqual({ ...sensorData, time: 1670682969884 })
         })
       })
     })
