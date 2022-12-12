@@ -24,6 +24,11 @@ export interface SensorDataQueryType {
   until: number
 }
 
+export interface SensorDataDBQueryType {
+  sensorId: string
+  time: { $gte: number, $lte: number }
+}
+
 export interface SensorDataDBdriverType {
   createOne: ({ collection, doc }: {
     collection: string
@@ -31,7 +36,7 @@ export interface SensorDataDBdriverType {
   }) => Promise<unknown>
   read: ({ collection, query }: {
     collection: string
-    query: SensorDataQueryType
+    query: SensorDataDBQueryType
   }) => Promise<DBSensorDataType[]>
 }
 
@@ -51,7 +56,10 @@ export class SensorDataRepo implements DataRepo<SensorDataType, SensorDataQueryT
     } catch (err) {
       const { origError: { code, message } }: DBErrorType = err as DBErrorType
       if (code === 11000 && message.includes('duplicate key')) {
-        throw new ConflictError('A conflict occurred adding Sensor Data record', { origError: err as Error, context: { sensorData } })
+        throw new ConflictError('A conflict occurred adding Sensor Data record', {
+          origError: err as Error,
+          context: { sensorData }
+        })
       }
       throw err
     }
@@ -59,7 +67,9 @@ export class SensorDataRepo implements DataRepo<SensorDataType, SensorDataQueryT
   }
 
   async fetch (query: SensorDataQueryType): Promise<SensorDataType[]> {
-    const records = await this.dbDriver.read({ collection: this.resourceName, query })
+    const { sensorId, since, until } = query
+    const dbQuery: SensorDataDBQueryType = { sensorId, time: { $gte: since, $lte: until } }
+    const records = await this.dbDriver.read({ collection: this.resourceName, query: dbQuery })
 
     return records.map((record: DBSensorDataType) => {
       const clone = { ...record }

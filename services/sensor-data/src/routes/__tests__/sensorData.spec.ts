@@ -1,10 +1,12 @@
 import supertest from 'supertest'
+import type { Response } from 'express'
 import server from '../../app'
 import { MongoClient } from 'mongodb'
 import { IOError } from '@converge-exercise/errors'
 import { config, configProvider } from '../../config'
 import { mongoDBDriver } from '../../singletons'
 import sensorData from './__fixtures__/sensorData.json'
+import { SensorDataType } from '../../dataRepos'
 
 jest.mock('@converge-exercise/mongo-driver', () => {
   const origModule = jest.requireActual('@converge-exercise/mongo-driver')
@@ -12,6 +14,10 @@ jest.mock('@converge-exercise/mongo-driver', () => {
   origModule.default.prototype.read = jest.fn(origModule.default.prototype.read)
   return origModule
 })
+
+export interface TypedRequestBody<T> extends Express.Request {
+  body: T
+}
 
 const mockedMongoDBDriverCreateOne = mongoDBDriver.createOne as jest.Mock
 const {
@@ -92,7 +98,7 @@ describe('THE /data endpoint', () => {
 
       describe('AND the underlying IO request doesn\'t throw', () => {
         describe('AND writing the record causes a conflict', () => {
-          beforeEach(async () => await client.db().collection(RESOURCE_NAME).insertOne(sensorData))
+          beforeEach(async () => await client.db().collection(RESOURCE_NAME).insertOne({ ...sensorData }))
 
           it('SHOULD respond with 409 ' +
             'AND NOT write the document into the database', async () => {
@@ -124,6 +130,86 @@ describe('THE /data endpoint', () => {
             const result = await client.db().collection(RESOURCE_NAME).findOne({ sensorId, time })
             return expect(result).toMatchObject(sensorData)
           })
+        })
+      })
+    })
+  })
+
+  describe('AND a GET request is made', () => {
+    describe('AND the request is not properly formulated', () => {
+      let invalidQuery: { sensorId?: string, since?: number, until?: number }
+
+      describe('AND the sensorId is missing from the query', () => {
+        invalidQuery = { since: 1670682969882, until: 1670682969884 }
+
+        it('SHOULD respond with 400', async () => {
+          return await supertest(server)
+            .get('/data')
+            .query(invalidQuery)
+            .expect(400)
+        })
+      })
+
+      describe('AND the since is missing from the query', () => {
+        invalidQuery = { sensorId: 'a6620c91-c855-4a16-a9a2-779861f93714', until: 1670682969884 }
+
+        it('SHOULD respond with 400', async () => {
+          return await supertest(server)
+            .get('/data')
+            .query(invalidQuery)
+            .expect(400)
+        })
+      })
+
+      describe('AND the until is missing from the query', () => {
+        invalidQuery = { sensorId: 'a6620c91-c855-4a16-a9a2-779861f93714', since: 1670682969882 }
+
+        it('SHOULD respond with 400', async () => {
+          return await supertest(server)
+            .get('/data')
+            .query(invalidQuery)
+            .expect(400)
+        })
+      })
+    })
+
+    describe('AND the request is properly formulated', () => {
+      const validQuery = {
+        sensorId: 'a6620c91-c855-4a16-a9a2-779861f93714',
+        since: 1670682969882,
+        until: 1670682969885
+      }
+
+      describe('AND there is no document in the database which matches the query', () => {
+        it('SHOULD respond with 200 ' +
+          'AND return an empty array', async () => {
+          const results: TypedRequestBody<SensorDataType[]> = await supertest(server)
+            .get('/data')
+            .query(validQuery)
+            .expect(200)
+
+          expect(Array.isArray(results.body)).toBe(true)
+          expect(results.body.length).toBe(0)
+        })
+      })
+
+      describe('AND there are documents in the database which match the query', () => {
+        const doc1 = { ...sensorData }
+        const doc2 = { ...sensorData, time: 1670682969884 }
+        const docsToWrite = [doc1, doc2]
+
+        beforeEach(async () => await client.db().collection(RESOURCE_NAME).insertMany(docsToWrite))
+
+        it('SHOULD respond with 200 ' +
+          'and return the queried documents', async () => {
+          const results: TypedRequestBody<SensorDataType[]> = await supertest(server)
+            .get('/data')
+            .query(validQuery)
+            .expect(200)
+
+          expect(results.body.length).toBe(docsToWrite.length)
+          // expect(results.body[0]).toStrictEqual({ ...sensorData })
+          // expect(results.body[1]).toStrictEqual({ ...sensorData, time: 1670682969884 })
         })
       })
     })

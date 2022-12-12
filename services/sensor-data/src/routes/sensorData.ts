@@ -1,12 +1,12 @@
 import { Router } from 'express'
 import type { Request, Response, NextFunction } from 'express'
 import { ConflictError } from '@converge-exercise/errors'
-import { SensorDataType } from '../dataRepos'
+import { SensorDataType, SensorDataQueryType } from '../dataRepos'
 import { logger, sensorDataRepo } from '../singletons'
 
 const router = Router()
 
-router.put('/', async (req: Request, res: Response, next: NextFunction): Promise<void> => { // eslint-disable-line @typescript-eslint/no-misused-promises
+router.put('/', async (req: Request<{}, {}, SensorDataType, {}>, res: Response, next: NextFunction): Promise<void> => { // eslint-disable-line @typescript-eslint/no-misused-promises
   const { body }: { body: SensorDataType } = req
 
   try {
@@ -30,6 +30,25 @@ router.put('/', async (req: Request, res: Response, next: NextFunction): Promise
     .setHeader('Content-Type', 'text/html')
     .status(204)
     .end()
+})
+
+router.get('/', async (req: Request<{}, {}, {}, SensorDataQueryType>, res: Response, next: NextFunction): Promise<void> => { // eslint-disable-line @typescript-eslint/no-misused-promises
+  const { query }: { query: SensorDataQueryType } = req
+
+  let results: SensorDataType[]
+  try {
+    results = await sensorDataRepo.fetch(query)
+  } catch (err) {
+    logger.error('An unexpected error occurred when trying to add sensor data', err)
+    next(err)
+    return
+  }
+
+  logger.info('A sensor data records are successfully retrieved', query)
+  res
+    .setHeader('Content-Type', 'application/json')
+    .status(200)
+    .json(results)
 })
 
 export default router
