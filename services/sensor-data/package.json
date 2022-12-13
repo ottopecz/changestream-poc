@@ -9,7 +9,7 @@
     "build": "npm run clean && tsc && npm run copy-files",
     "lint": "eslint '**/*.{js,ts}'",
     "lint:fix": "eslint --fix '**/*.{js,ts}'",
-    "test": "jest --detectOpenHandles",
+    "test": "jest --testTimeout=14000",
     "start": "npm run build && node .dist/start.js"
   },
   "keywords": [
