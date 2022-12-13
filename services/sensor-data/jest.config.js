@@ -5,11 +5,11 @@ module.exports = {
   setupFilesAfterEnv: [
     './jest.setup'
   ],
-  globalSetup: './src/__utils__/global-setup.ts',
-  globalTeardown: './src/__utils__/global-teardown.ts',
+  globalSetup: './src/__testutils__/global-setup.ts',
+  globalTeardown: './src/__testutils__/global-teardown.ts',
   testPathIgnorePatterns: [
     '/node_modules/',
     '/.dist/',
-    '/src/__utils__/*'
+    '/src/__testutils__/*'
   ]
 }
