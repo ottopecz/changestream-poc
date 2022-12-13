@@ -1,9 +1,9 @@
 import * as dotenv from 'dotenv'
 dotenv.config()
 /* eslint-disable import/first */
-import server from './server'
-import { config, configProvider } from './config'
-import { logger } from './singletons'
+import server from './server/server'
+import { config, configProvider } from './server/config'
+import { logger } from './server/singletons'
 /* eslint-enable import/first */
 
 const { port } = configProvider(config)
