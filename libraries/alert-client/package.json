@@ -27,8 +27,7 @@
   },
   "homepage": "https://github.com/ottopecz/converge-exercise#readme",
   "dependencies": {
-    "node-fetch": "^2.6.7",
-    "undici": "^5.14.0"
+    "node-fetch": "^2.6.7"
   },
   "devDependencies": {
     "@types/nock": "^11.1.0",
