@@ -1,0 +1,38 @@
+{
+  "name": "@converge-exercise/alert-client",
+  "version": "1.0.0",
+  "description": "Converge exercise - alert-client library",
+  "main": ".dist/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "clean": "rimraf .dist/",
+    "build": "npm run clean && tsc",
+    "lint": "eslint '**/*.{js,ts}'",
+    "lint:fix": "eslint --fix '**/*.{js,ts}'",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+  },
+  "keywords": [
+    "converge",
+    "exercise",
+    "alert-client"
+  ],
+  "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ottopecz/converge-exercise/issues"
+  },
+  "homepage": "https://github.com/ottopecz/converge-exercise#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "undici": "^5.14.0"
+  },
+  "devDependencies": {
+    "@types/nock": "^11.1.0",
+    "@types/node-fetch": "^2.6.2",
+    "nock": "^13.2.9"
+  }
+}

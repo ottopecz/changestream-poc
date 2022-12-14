@@ -31,7 +31,8 @@
     "libraries/errors",
     "libraries/logger",
     "libraries/mongo-driver",
-    "libraries/middleware"
+    "libraries/middleware",
+    "libraries/alert-client"
   ],
   "devDependencies": {
     "@types/jest": "^29.2.3",
