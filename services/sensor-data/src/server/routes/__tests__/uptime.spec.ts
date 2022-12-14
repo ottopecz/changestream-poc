@@ -1,5 +1,5 @@
 import supertest from 'supertest'
-import server from '../../server'
+import { server } from '../../index'
 
 describe('THE /uptime endpoint', () => {
   describe('WHEN a GET request is made ', () => {

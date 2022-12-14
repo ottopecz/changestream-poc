@@ -1,6 +1,6 @@
 import supertest from 'supertest'
 import MongoDBDriver from '@converge-exercise/mongo-driver'
-import server from '../../server'
+import { server } from '../../index'
 
 jest.mock('@converge-exercise/mongo-driver')
 

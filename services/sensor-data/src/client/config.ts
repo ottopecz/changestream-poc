@@ -1,22 +1,15 @@
 import baseConfig from '../config'
 
 export const config = Object.freeze({
-  ...baseConfig,
-  port: process.env.PORT,
-  sensorData: {
-    resourceName: process.env.MONGO_COLLECTION
-  }
+  ...baseConfig
 })
 
 export function configProvider ({
   nodeEnv,
-  port,
   logging,
-  mongo,
-  sensorData
+  mongo
 }: {
   nodeEnv: unknown
-  port: unknown
   logging: { level: unknown }
   mongo: {
     hosts: unknown
@@ -27,10 +20,8 @@ export function configProvider ({
     password: unknown
     options: unknown
   }
-  sensorData: { resourceName: unknown }
 }): {
     nodeEnv: string
-    port: number
     logging: { level: string }
     mongo: {
       hosts: string
@@ -41,14 +32,9 @@ export function configProvider ({
       password?: string
       options?: { [p: string ]: unknown }
     }
-    sensorData: { resourceName: string }
   } {
   if (typeof nodeEnv !== 'string') {
     throw new TypeError('The type of nodeEnv has to be a string')
-  }
-
-  if (typeof port !== 'string') {
-    throw new TypeError('The type of port has to be a string')
   }
 
   if (typeof logging.level !== 'string') {
@@ -112,15 +98,9 @@ export function configProvider ({
     mongoRes.options = parsedMongoOptions
   }
 
-  if (typeof sensorData.resourceName !== 'string') {
-    throw new TypeError('The type of logging.level has to be a string')
-  }
-
   return Object.freeze({
     nodeEnv,
-    port: parseInt(port, 10),
     logging: { level: logging.level },
-    mongo: mongoRes,
-    sensorData: { resourceName: sensorData.resourceName }
+    mongo: mongoRes
   })
 }

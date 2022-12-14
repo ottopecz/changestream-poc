@@ -10,7 +10,8 @@
     "lint": "eslint '**/*.{js,ts}'",
     "lint:fix": "eslint --fix '**/*.{js,ts}'",
     "test": "jest --testTimeout=14000",
-    "start": "npm run build && node .dist/start.js"
+    "start": "npm run build && node .dist/start.js",
+    "start:publisher": "npm run build && node .dist/publisher/publisher.js"
   },
   "keywords": [
     "converge",

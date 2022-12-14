@@ -1,5 +1,5 @@
 import supertest from 'supertest'
-import server from '../../server'
+import { server } from '../../index'
 
 describe('THE /api-docs endpoints', () => {
   describe('THE /api-docs/json endpoint', () => {
