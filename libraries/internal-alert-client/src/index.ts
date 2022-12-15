@@ -1,8 +1,10 @@
 import { IOError } from '@converge-exercise/errors'
 import fetch, { Response } from 'node-fetch'
 
-export interface AlertData {
-  level: string
+type InternalAlertTypes = 'sensor'
+
+export interface InternalAlertData {
+  type: InternalAlertTypes
   context: {
     reading: {
       sensorId: string
@@ -16,7 +18,7 @@ export interface AlertData {
   }
 }
 
-export default class AlertClient {
+export default class InternalAlertClient {
   private readonly url: string
 
   constructor (url: string) {
@@ -33,11 +35,11 @@ export default class AlertClient {
     throw new Error(`statusText: ${statusText}, statusCode: ${statusCode}`)
   }
 
-  async sendAlert (alertData: AlertData): Promise<string> {
+  async sendAlert (alertData: InternalAlertData): Promise<string> {
     let res
     try {
       res = await fetch(this.url, { body: JSON.stringify(alertData), method: 'PUT' })
-      AlertClient.checkResStatus(res as unknown as Response)
+      InternalAlertClient.checkResStatus(res as unknown as Response)
       return await res.text()
     } catch (err: unknown) {
       const origError = err as Error

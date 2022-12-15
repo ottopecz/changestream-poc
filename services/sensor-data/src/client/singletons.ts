@@ -1,6 +1,6 @@
 import Logger from '@converge-exercise/logger'
 import MongoDBDriver from '@converge-exercise/mongo-driver'
-import AlertClient from '@converge-exercise/alert-client'
+import AlertClient from '@converge-exercise/internal-alert-client'
 import { config, configProvider } from './config'
 
 const validatedConfig = configProvider(config)

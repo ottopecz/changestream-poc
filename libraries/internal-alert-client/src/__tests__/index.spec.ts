@@ -1,7 +1,7 @@
 import nock from 'nock'
 import fetch from 'node-fetch'
 import { IOError } from '@converge-exercise/errors'
-import AlertClient, { AlertData } from '../'
+import InternalAlertClient, { InternalAlertData } from '../'
 
 jest.mock('node-fetch', () => {
   const origModule = jest.requireActual('node-fetch')
@@ -10,8 +10,8 @@ jest.mock('node-fetch', () => {
 })
 
 const mockFetch = fetch as unknown as jest.Mock
-const mockAlertData: AlertData = {
-  level: 'severe',
+const mockInternalAlertData: InternalAlertData = {
+  type: 'sensor',
   context: {
     reading: {
       sensorId: 'a6620c91-c855-4a16-a9a2-779861f93714',
@@ -25,12 +25,10 @@ const mockAlertData: AlertData = {
   }
 }
 
-describe('THE alertClient instance', () => {
-  let alertClient: AlertClient
+describe('THE internalAlertClient instance', () => {
+  let internalAlertClient: InternalAlertClient
 
-  beforeEach(() => {
-    alertClient = new AlertClient('http://foo.com/bar')
-  })
+  beforeEach(() => { internalAlertClient = new InternalAlertClient('http://foo.com/bar') })
 
   afterEach(() => mockFetch.mockClear())
 
@@ -42,7 +40,7 @@ describe('THE alertClient instance', () => {
 
       it('SHOULD throw', async () => {
         return await expect(async () =>
-          await alertClient.sendAlert(mockAlertData)).rejects.toThrow(new IOError('An error occurred sending alert', { origError: new Error('test') }))
+          await internalAlertClient.sendAlert(mockInternalAlertData)).rejects.toThrow(new IOError('An error occurred sending alert', { origError: new Error('test') }))
       })
     })
 
@@ -56,7 +54,7 @@ describe('THE alertClient instance', () => {
 
         it('SHOULD throw', async () => {
           return await expect(async () =>
-            await alertClient.sendAlert(mockAlertData))
+            await internalAlertClient.sendAlert(mockInternalAlertData))
             .rejects
             .toThrow(new IOError('An error occurred sending alert', { origError: new Error('statusText: Internal server error, statusCode: 500') }))
         })
@@ -71,9 +69,9 @@ describe('THE alertClient instance', () => {
 
         it('SHOULD Call the node-fetch library ' +
           'AND return the text of the response', async () => {
-          const result = await alertClient.sendAlert(mockAlertData)
+          const result = await internalAlertClient.sendAlert(mockInternalAlertData)
           expect(fetch).toBeCalledTimes(1)
-          expect(fetch).toBeCalledWith('http://foo.com/bar', { body: JSON.stringify(mockAlertData), method: 'PUT' })
+          expect(fetch).toBeCalledWith('http://foo.com/bar', { body: JSON.stringify(mockInternalAlertData), method: 'PUT' })
           expect(result).toBe('')
         })
       })

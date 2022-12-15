@@ -1,7 +1,7 @@
 {
-  "name": "@converge-exercise/alert-client",
+  "name": "@converge-exercise/internal-alert-client",
   "version": "1.0.0",
-  "description": "Converge exercise - alert-client library",
+  "description": "Converge exercise - internal-alert-client library",
   "main": ".dist/index.js",
   "types": "src/index.d.ts",
   "scripts": {

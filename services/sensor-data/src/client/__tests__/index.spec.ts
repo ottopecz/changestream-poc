@@ -1,15 +1,15 @@
 import { EventEmitter } from 'node:events'
 import { Db, ChangeStreamDocument } from 'mongodb'
 import MongoDBDriver from '@converge-exercise/mongo-driver'
-import AlertClient, { AlertData } from '@converge-exercise/alert-client'
+import InternalAlertClient, { InternalAlertData } from '@converge-exercise/internal-alert-client'
 import { SensorDataType } from '../../sharedTypes'
 import client from '../'
 
 jest.mock('@converge-exercise/mongo-driver')
-jest.mock('@converge-exercise/alert-client')
+jest.mock('@converge-exercise/internal-alert-client')
 
 const mockedMongoDBDriverGetDb = jest.mocked(MongoDBDriver.prototype.getDb)
-const mockedAlertClientSendAlert = jest.mocked(AlertClient.prototype.sendAlert)
+const mockedAlertClientSendAlert = jest.mocked(InternalAlertClient.prototype.sendAlert)
 const barefootEventEmitter = new EventEmitter()
 
 interface MockChangeStreamDocument {
@@ -84,8 +84,8 @@ describe('THE client', () => {
             await client.listen()
             mockChangeStream.emit('change', mockChangeStreamEvent)
             expect(mockedAlertClientSendAlert).toHaveBeenCalledTimes(1)
-            const expectedAlertData: AlertData = {
-              level: 'severe',
+            const expectedAlertData: InternalAlertData = {
+              type: 'sensor',
               context: {
                 reading: {
                   sensorId: 'uuid',
@@ -110,8 +110,8 @@ describe('THE client', () => {
             await client.listen()
             mockChangeStream.emit('change', mockChangeStreamEvent)
             expect(mockedAlertClientSendAlert).toHaveBeenCalledTimes(1)
-            const expectedAlertData: AlertData = {
-              level: 'severe',
+            const expectedAlertData: InternalAlertData = {
+              type: 'sensor',
               context: {
                 reading: {
                   sensorId: 'uuid',

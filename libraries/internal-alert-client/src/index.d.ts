@@ -1,8 +1,10 @@
 import { Response } from 'node-fetch'
 
-declare module '@converge-exercise/alert-client' {
-  export interface AlertData {
-    level: string
+declare module '@converge-exercise/internal-alert-client' {
+  type InternalAlertTypes = 'sensor'
+
+  export interface InternalAlertData {
+    type: InternalAlertTypes
     context: {
       reading: {
         sensorId: string
@@ -16,10 +18,10 @@ declare module '@converge-exercise/alert-client' {
     }
   }
 
-  export default class AlertClient {
+  export default class InternalAlertClient {
     private readonly url
     constructor (url: string)
     static checkResStatus (res: Response): Response
-    sendAlert (alertData: AlertData): Promise<string>
+    sendAlert (alertData: InternalAlertData): Promise<string>
   }
 }

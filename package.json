@@ -34,7 +34,7 @@
     "libraries/logger",
     "libraries/mongo-driver",
     "libraries/middleware",
-    "libraries/alert-client",
+    "libraries/internal-alert-client",
     "libraries/external-alert-client"
   ],
   "devDependencies": {

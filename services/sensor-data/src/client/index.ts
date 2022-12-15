@@ -1,14 +1,13 @@
 import { ChangeStream, Db, ChangeStreamDocument } from 'mongodb'
 import { logger, mongoDBDriver, alertClient } from './singletons'
-import { AlertData } from '@converge-exercise/alert-client'
+import { InternalAlertData } from '@converge-exercise/internal-alert-client'
 import { config, configProvider } from './config'
 
 const { mongo: { collection }, sensorData: { from, to } } = configProvider(config)
-const LEVEL = 'severe'
 
 let changeStream: ChangeStream
 
-function alertDataFactory ({
+function sensorAlertDataFactory ({
   sensorId,
   time,
   value,
@@ -20,9 +19,9 @@ function alertDataFactory ({
   value: number
   from: number
   to: number
-}): AlertData {
+}): InternalAlertData {
   return {
-    level: LEVEL,
+    type: 'sensor',
     context: {
       reading: {
         sensorId,
@@ -47,8 +46,8 @@ export async function changeHandler (changeStreamDocument: ChangeStreamDocument)
 
   if (value < from || value > to) {
     logger.info('Sending alert request', { sensorId, value, time })
-    const alertData = alertDataFactory({ sensorId, value, time, from, to })
-    await alertClient.sendAlert(alertData)
+    const internalAlertData = sensorAlertDataFactory({ sensorId, value, time, from, to })
+    await alertClient.sendAlert(internalAlertData)
   }
 }
 
