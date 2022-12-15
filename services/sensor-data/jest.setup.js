@@ -19,12 +19,4 @@ process.env.SENSOR_DATA_UNTIL = 6
 process.env.SENSOR_DATA_ALERT_URL = 'https://devnull-as-a-service.com/dev/null'
 
 // Mock logger package
-jest.mock('@converge-exercise/logger', () => {
-  return class MockLogger {
-    debug () {}
-    error () {}
-    info () {}
-    log () {}
-    warn () {}
-  }
-})
+jest.mock('@converge-exercise/logger')
