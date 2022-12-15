@@ -27,8 +27,6 @@
   },
   "homepage": "https://github.com/ottopecz/converge-exercise#readme",
   "dependencies": {
-    "@aws-sdk/client-cloudwatch": "^3.224.0",
-    "aws-xray-sdk": "^3.4.0",
     "express-openapi-validator": "^5.0.0",
     "response-time": "^2.3.2"
   },
