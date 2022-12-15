@@ -4,7 +4,9 @@
   "description": "Converge exercise - errors library",
   "main": ".dist/index.js",
   "types": "src/index.d.ts",
-  "devDependencies": {},
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  },
   "scripts": {
     "clean": "rimraf .dist/",
     "build": "npm run clean && tsc",
