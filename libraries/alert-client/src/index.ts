@@ -1,25 +1,19 @@
 import { IOError } from '@converge-exercise/errors'
 import fetch, { Response } from 'node-fetch'
 
-interface Reading {
-  sensorId: string
-  time: number
-  value: number
-}
-
-interface ValidRange {
-  from: number
-  to: number
-}
-
-interface Context {
-  reading: Reading
-  validRange: ValidRange
-}
-
 export interface AlertData {
   level: string
-  context: Context
+  context: {
+    reading: {
+      sensorId: string
+      time: number
+      value: number
+    }
+    validRange: {
+      from: number
+      to: number
+    }
+  }
 }
 
 export default class AlertClient {

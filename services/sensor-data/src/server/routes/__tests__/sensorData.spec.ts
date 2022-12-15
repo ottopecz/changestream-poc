@@ -6,7 +6,7 @@ import { IOError } from '@converge-exercise/errors'
 import { config, configProvider } from '../../config'
 import { mongoDBDriver } from '../../singletons'
 import sensorData from './__fixtures__/sensorData.json'
-import { SensorDataType } from '../../dataRepos'
+import { SensorDataType } from '../../../sharedTypes'
 
 jest.mock('@converge-exercise/mongo-driver', () => {
   const origModule = jest.requireActual('@converge-exercise/mongo-driver')

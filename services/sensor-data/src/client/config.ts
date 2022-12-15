@@ -1,13 +1,19 @@
 import baseConfig from '../config'
 
 export const config = Object.freeze({
-  ...baseConfig
+  ...baseConfig,
+  sensorData: {
+    from: process.env.SENSOR_DATA_SINCE,
+    to: process.env.SENSOR_DATA_UNTIL,
+    alertUrl: process.env.SENSOR_DATA_ALERT_URL
+  }
 })
 
 export function configProvider ({
   nodeEnv,
   logging,
-  mongo
+  mongo,
+  sensorData
 }: {
   nodeEnv: unknown
   logging: { level: unknown }
@@ -20,6 +26,11 @@ export function configProvider ({
     password: unknown
     options: unknown
   }
+  sensorData: {
+    from: unknown
+    to: unknown
+    alertUrl: unknown
+  }
 }): {
     nodeEnv: string
     logging: { level: string }
@@ -31,6 +42,11 @@ export function configProvider ({
       username?: string
       password?: string
       options?: { [p: string ]: unknown }
+    }
+    sensorData: {
+      from: number
+      to: number
+      alertUrl: string
     }
   } {
   if (typeof nodeEnv !== 'string') {
@@ -98,9 +114,32 @@ export function configProvider ({
     mongoRes.options = parsedMongoOptions
   }
 
+  if (typeof sensorData.from !== 'string') {
+    throw new TypeError('The type of sensorData.from has to be a string')
+  }
+
+  if (typeof sensorData.to !== 'string') {
+    throw new TypeError('The type of sensorData.to has to be a string')
+  }
+
+  if (typeof sensorData.alertUrl !== 'string') {
+    throw new TypeError('The type of sensorData.alertUrl has to be a string')
+  }
+
+  const sensorDataRes: {
+    from: number
+    to: number
+    alertUrl: string
+  } = {
+    from: parseFloat(sensorData.from),
+    to: parseFloat(sensorData.to),
+    alertUrl: sensorData.alertUrl
+  }
+
   return Object.freeze({
     nodeEnv,
     logging: { level: logging.level },
-    mongo: mongoRes
+    mongo: mongoRes,
+    sensorData: sensorDataRes
   })
 }

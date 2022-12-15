@@ -1,11 +1,6 @@
 import { ConflictError } from '@converge-exercise/errors'
+import type { SensorDataType } from '../../sharedTypes'
 import type { DataRepo } from './types'
-
-export interface SensorDataType {
-  sensorId: string
-  time: number
-  value: number
-}
 
 interface DBSensorDataType extends SensorDataType {
   _id: unknown

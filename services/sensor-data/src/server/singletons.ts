@@ -1,6 +1,7 @@
 import Logger from '@converge-exercise/logger'
 import MongoDBDriver from '@converge-exercise/mongo-driver'
-import { DataRepo, SensorDataRepo, SensorDataType, SensorDataQueryType, SensorDataDBdriverType } from './dataRepos'
+import { SensorDataType } from '../sharedTypes'
+import { DataRepo, SensorDataRepo, SensorDataQueryType, SensorDataDBdriverType } from './dataRepos'
 import { config, configProvider } from './config'
 
 export const logger = new Logger()

@@ -1,7 +1,8 @@
 import { Router } from 'express'
 import type { Request, Response, NextFunction } from 'express'
 import { ConflictError } from '@converge-exercise/errors'
-import { SensorDataType, SensorDataQueryType } from '../dataRepos'
+import { SensorDataType } from '../../sharedTypes'
+import { SensorDataQueryType } from '../dataRepos'
 import { logger, sensorDataRepo } from '../singletons'
 
 const router = Router()

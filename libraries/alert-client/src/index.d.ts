@@ -2,9 +2,18 @@ import { Response } from 'node-fetch'
 
 declare module '@converge-exercise/alert-client' {
   export interface AlertData {
-    sensorId: string
-    value: number
-    time: number
+    level: string
+    context: {
+      reading: {
+        sensorId: string
+        time: number
+        value: number
+      }
+      validRange: {
+        from: number
+        to: number
+      }
+    }
   }
 
   export default class AlertClient {

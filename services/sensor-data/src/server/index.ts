@@ -14,6 +14,7 @@ import sensorDataRouter from './routes/sensorData'
 
 import { config, configProvider } from './config'
 import { logger } from './singletons'
+import { mongoDBDriver } from '../client/singletons'
 
 export const server: Express = express()
 
@@ -47,6 +48,8 @@ export default {
   },
 
   async close (): Promise<void> {
+    await mongoDBDriver.close()
+    logger.info('The server db connection is closed')
     if (boundPromClose !== undefined) {
       await boundPromClose()
       logger.info('The http server stopped listening')
