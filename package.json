@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "description": "Converge exercise",
   "scripts": {
+    "clean": "npm run clean --workspaces",
+    "copy-files": "npm run clean --workspaces --if-present",
     "build": "npm run build --workspaces",
     "lint": "npm run lint --workspaces",
     "lint:fix": "npm run lint:fix --workspaces",
     "maintenance:delete-node-modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
-    "maintenance:delete-dist": "find . -name '.dist' -type d -prune -exec rm -rf '{}' +",
+    "maintenance:delete-non-version-tracked": "git clean -fdx",
     "start": "npm run start --workspaces --if-present",
-    "test": "npm test --workspaces"
+    "test": "npm run test --workspaces"
   },
   "keywords": [
     "converge",
@@ -35,6 +37,7 @@
     "libraries/alert-client"
   ],
   "devDependencies": {
+    "rimraf": "^3.0.2",
     "@types/jest": "^29.2.3",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "eslint": "^8.28.0",
