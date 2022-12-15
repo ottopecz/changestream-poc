@@ -1,0 +1,136 @@
+openapi: 3.0.3
+info:
+  title: Notification Data Service
+  description: Converge Exercise - Notification Data Service.
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+paths:
+  "/":
+    get:
+      summary: Return healthcheck
+      description: Return healthcheck
+      operationId: returnHealthCheck
+      responses:
+        '200':
+          description: successful
+          content:
+            plain/text:
+              schema:
+                "$ref": "#/components/schemas/UptimeInfo"
+  "/uptime":
+    get:
+      summary: Return server uptime
+      description: Return server uptime
+      operationId: returnServerUptime
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UptimeInfo"
+  "/api-docs/json":
+    get:
+      summary: Return api docs json
+      description: Return api docs json
+      operationId: returnApiDocsJSON
+      responses:
+        '200':
+          description: successful
+          content:
+            application/json:
+              schema:
+                type: object
+  "/api-docs/html":
+    get:
+      summary: Return api docs html
+      description: Return api docs html
+      operationId: returnApiDocsHTML
+      responses:
+        '200':
+          description: successful
+          content:
+            text/html:
+              schema:
+                type: string
+  "/alerts":
+    put:
+      summary: Add new Alert Notification
+      description: Add new Alert Notification
+      operationId: addAlertNotification
+      requestBody:
+        description: New Alert Notification to add
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AlertData"
+      responses:
+        '204':
+          description: Successful
+        '400':
+          description: Bad request
+          content: {}
+components:
+  schemas:
+    SensorAlertContextReading:
+      type: object
+      required:
+        - sensorId
+        - time
+        - value
+      properties:
+        sensorId:
+          type: string
+          format: uuid
+        time:
+          type: integer
+          format: int64
+        value:
+          type: number
+          format: float
+    SensorAlertContextValidRange:
+      type: object
+      required:
+        - from
+        - to
+      properties:
+        from:
+          type: number
+          format: float
+        to:
+          type: number
+          format: float
+    SensorAlertContext:
+      type: object
+      required:
+        - reading
+        - validRange
+      properties:
+        reading:
+          "$ref": "#/components/schemas/SensorAlertContextReading"
+        validRange:
+          "$ref": "#/components/schemas/SensorAlertContextValidRange"
+    AlertData:
+      required:
+        - type
+        - context
+      properties:
+        type:
+          type: string
+          enum:
+            - 'sensor'
+        context:
+          oneOf:
+            - $ref: "#/components/schemas/SensorAlertContext"
+    HealthCheck:
+      type: string
+    UptimeInfo:
+      type: object
+      required:
+        - uptime
+      properties:
+        uptime:
+          type: integer
+          format: int64
