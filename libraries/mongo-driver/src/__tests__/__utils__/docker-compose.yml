@@ -4,12 +4,11 @@ services:
     ports:
       - '27017:27017'
     restart: always
-    container_name: converge-exercise_mongo-test-db
+    container_name: changestream-poc_mongo-test-db
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-      - /Users/ottopecz/Development/data/converge-exercise_mongo-test-db:/data/db
     environment:
-      - MONGO_INITDB_DATABASE=converge-exercise_mongo-test-db
+      - MONGO_INITDB_DATABASE=changestream-poc_mongo-test-db
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=rootpassword
     image: mongo:latest

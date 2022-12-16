@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express'
-import { ValidationError } from '@converge-exercise/errors'
+import { ValidationError } from '@changestream-poc/errors'
 import { logger } from './singletons'
 
 interface NativeValidationError {

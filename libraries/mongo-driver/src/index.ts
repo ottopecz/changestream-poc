@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { MongoClient, Db } from 'mongodb'
-import { IOError } from '@converge-exercise/errors'
+import { IOError } from '@changestream-poc/errors'
 
 /**
  * Standardised driver for connecting to and using MongoDB

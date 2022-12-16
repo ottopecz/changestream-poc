@@ -4,10 +4,9 @@ services:
     ports:
       - '27017:27017'
     restart: always
-    container_name: converge-exercise_test-db
+    container_name: changestream-poc_test-db
     volumes:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-      - /Users/ottopecz/Development/data/ce-notification-test-db:/data/db
     environment:
       - MONGO_INITDB_DATABASE=ce-notification-test-db
       - MONGO_INITDB_ROOT_USERNAME=root

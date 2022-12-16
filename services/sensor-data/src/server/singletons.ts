@@ -1,5 +1,5 @@
-import Logger from '@converge-exercise/logger'
-import MongoDBDriver from '@converge-exercise/mongo-driver'
+import Logger from '@changestream-poc/logger'
+import MongoDBDriver from '@changestream-poc/mongo-driver'
 import { SensorDataType } from '../sharedTypes'
 import { DataRepo, SensorDataRepo, SensorDataQueryType, SensorDataDBdriverType } from './dataRepos'
 import { config, configProvider } from './config'

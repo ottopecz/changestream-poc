@@ -1,6 +1,6 @@
 import { Db } from 'mongodb'
 
-declare module '@converge-exercise/mongo-driver' {
+declare module '@changestream-poc/mongo-driver' {
   declare class MongoDBDriver {
     private readonly config
     isConnecting: null | Promise<Db>

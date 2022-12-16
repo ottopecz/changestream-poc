@@ -1,3 +1,3 @@
-import Logger from '@converge-exercise/logger'
+import Logger from '@changestream-poc/logger'
 
 export const logger = new Logger()

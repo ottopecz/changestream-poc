@@ -1,4 +1,4 @@
-declare module '@converge-exercise/errors' {
+declare module '@changestream-poc/errors' {
 
   /** Represents an error which indicates a conflict */
   export declare class ConflictError extends Error {

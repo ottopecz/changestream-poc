@@ -4,7 +4,7 @@ import express from 'express'
 import type { Express } from 'express'
 
 import { middleware as OpenApiValidatorMiddleware } from 'express-openapi-validator'
-import { openApiErrorHandler } from '@converge-exercise/middleware'
+import { openApiErrorHandler } from '@changestream-poc/middleware'
 
 import openApiDocument from './apiSpec'
 import apiDocsRouter from './routes/apiDocs'

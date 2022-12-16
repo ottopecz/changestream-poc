@@ -1,4 +1,4 @@
-import { IOError } from '@converge-exercise/errors'
+import { IOError } from '@changestream-poc/errors'
 import type { NotificationData, AlertNotificationContext, SensorAlertNotificationContext } from '../../sharedTypes'
 import type { DataRepo } from './types'
 

@@ -1,7 +1,7 @@
 {
-  "name": "converge-exercise",
+  "name": "changestream-poc",
   "version": "1.0.0",
-  "description": "Converge exercise",
+  "description": "Changestream poc",
   "scripts": {
     "clean": "npm run clean --workspaces",
     "copy-files": "npm run clean --workspaces --if-present",
@@ -10,22 +10,22 @@
     "lint:fix": "npm run lint:fix --workspaces",
     "maintenance:delete-node-modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "maintenance:delete-non-version-tracked": "git clean -fdx",
-    "test": "npm run test --workspaces"
+    "test": "npm run build && npm test --workspaces"
   },
   "keywords": [
-    "converge",
-    "exercise"
+    "changestream",
+    "poc"
   ],
   "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+    "url": "git+https://github.com/ottopecz/changestream-poc.git"
   },
   "bugs": {
-    "url": "https://github.com/ottopecz/converge-exercise/issues"
+    "url": "https://github.com/ottopecz/changestream-poc/issues"
   },
-  "homepage": "https://github.com/ottopecz/converge-exercise#README.md",
+  "homepage": "https://github.com/ottopecz/changestream-poc#README.md",
   "workspaces": [
     "services/sensor-data",
     "services/notifications",

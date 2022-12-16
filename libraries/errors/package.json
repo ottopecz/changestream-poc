@@ -1,7 +1,7 @@
 {
-  "name": "@converge-exercise/errors",
+  "name": "@changestream-poc/errors",
   "version": "1.0.0",
-  "description": "Converge exercise - errors library",
+  "description": "Changestream poc - errors library",
   "main": ".dist/index.js",
   "types": "src/index.d.ts",
   "scripts": {
@@ -13,17 +13,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+    "url": "git+https://github.com/ottopecz/changestream-poc.git"
   },
   "keywords": [
-    "converge",
-    "exercise",
+    "changestream",
+    "poc",
     "errors"
   ],
   "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ottopecz/converge-exercise/issues"
+    "url": "https://github.com/ottopecz/changestream-poc/issues"
   },
-  "homepage": "https://github.com/ottopecz/converge-exercise#readme"
+  "homepage": "https://github.com/ottopecz/changestream-poc#readme"
 }

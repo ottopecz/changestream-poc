@@ -28,7 +28,7 @@ function defer <T> (): { promise: Promise<T>, resolve: (arg0: T) => void, reject
 describe('THE MongoDBDriver', () => {
   const defaultConfig = {
     hosts: process.env.MONGO_HOSTS ?? 'localhost:27017',
-    database: 'converge-exercise_mongo-test-db',
+    database: 'changestream-poc_mongo-test-db',
     username: 'user',
     password: 'userpassword'
   }

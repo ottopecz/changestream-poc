@@ -1,7 +1,7 @@
 {
-  "name": "@converge-exercise/logger",
+  "name": "@changestream-poc/logger",
   "version": "1.0.0",
-  "description": "Converge exercise - logger library",
+  "description": "Changestream poc - logger library",
   "main": ".dist/index.js",
   "types": "src/index.d.ts",
   "scripts": {
@@ -13,19 +13,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+    "url": "git+https://github.com/ottopecz/changestream-poc.git"
   },
   "keywords": [
-    "converge",
-    "exercise",
+    "changestream",
+    "poc",
     "logger"
   ],
   "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ottopecz/converge-exercise/issues"
+    "url": "https://github.com/ottopecz/changestream-poc/issues"
   },
-  "homepage": "https://github.com/ottopecz/converge-exercise#readme",
+  "homepage": "https://github.com/ottopecz/changestream-poc#readme",
   "dependencies": {
     "fast-safe-stringify": "^2.1.1",
     "winston": "^3.8.2"

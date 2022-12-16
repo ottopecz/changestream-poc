@@ -47,7 +47,6 @@ export function configProvider ({
   mongo,
   sensorData
 }: ConfigProviderInput): ConfigProviderOutput {
-  debugger
   if (typeof nodeEnv !== 'string') {
     throw new TypeError('The type of nodeEnv has to be a string')
   }

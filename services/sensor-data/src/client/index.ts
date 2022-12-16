@@ -1,6 +1,6 @@
 import { ChangeStream, Db, ChangeStreamDocument } from 'mongodb'
 import { logger, mongoDBDriver, alertClient } from './singletons'
-import { InternalAlertData } from '@converge-exercise/internal-alert-client'
+import { InternalAlertData } from '@changestream-poc/internal-alert-client'
 import { config, configProvider } from './config'
 
 const { mongo: { collection }, sensorData: { from, to } } = configProvider(config)

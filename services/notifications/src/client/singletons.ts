@@ -1,6 +1,6 @@
-import Logger from '@converge-exercise/logger'
-import MongoDBDriver from '@converge-exercise/mongo-driver'
-import ExternalAlertClient from '@converge-exercise/external-alert-client'
+import Logger from '@changestream-poc/logger'
+import MongoDBDriver from '@changestream-poc/mongo-driver'
+import ExternalAlertClient from '@changestream-poc/external-alert-client'
 import { config, configProvider } from './config'
 
 const validatedConfig = configProvider(config)

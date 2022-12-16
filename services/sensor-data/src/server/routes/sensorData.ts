@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import type { Request, Response, NextFunction } from 'express'
-import { ConflictError } from '@converge-exercise/errors'
+import { ConflictError } from '@changestream-poc/errors'
 import { SensorDataType } from '../../sharedTypes'
 import { SensorDataQueryType } from '../dataRepos'
 import { logger, sensorDataRepo } from '../singletons'

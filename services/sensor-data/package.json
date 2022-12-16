@@ -1,7 +1,7 @@
 {
   "name": "sensor-data",
   "version": "1.0.0",
-  "description": "Converge exercise - sensor data service",
+  "description": "Changestream poc - sensor data service",
   "main": ".dist/serve.js",
   "scripts": {
     "clean": "rimraf .dist/",
@@ -13,8 +13,8 @@
     "start": "npm run build && node .dist/start.js"
   },
   "keywords": [
-    "converge",
-    "exercise",
+    "changestream",
+    "poc",
     "sensor",
     "data",
     "service"
@@ -23,12 +23,12 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+    "url": "git+https://github.com/ottopecz/changestream-poc.git"
   },
   "bugs": {
-    "url": "https://github.com/ottopecz/converge-exercise/issues"
+    "url": "https://github.com/ottopecz/changestream-poc/issues"
   },
-  "homepage": "https://github.com/ottopecz/converge-exercise#README.md",
+  "homepage": "https://github.com/ottopecz/changestream-poc#README.md",
   "dependencies": {
     "express": "^4.17.3",
     "express-openapi-validator": "^5.0.0",

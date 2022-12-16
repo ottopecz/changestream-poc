@@ -1,5 +1,5 @@
-import Logger from '@converge-exercise/logger'
-import MongoDBDriver from '@converge-exercise/mongo-driver'
+import Logger from '@changestream-poc/logger'
+import MongoDBDriver from '@changestream-poc/mongo-driver'
 import { NotificationData, AlertNotificationContext, SensorAlertNotificationContext } from '../sharedTypes'
 import { DataRepo, NotificationDataRepo, NotificationDataDBdriverType } from './dataRepos'
 import { config, configProvider } from './config'

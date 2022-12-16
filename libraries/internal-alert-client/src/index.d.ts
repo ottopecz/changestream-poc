@@ -1,6 +1,6 @@
 import { Response } from 'node-fetch'
 
-declare module '@converge-exercise/internal-alert-client' {
+declare module '@changestream-poc/internal-alert-client' {
   type InternalAlertTypes = 'sensor'
 
   export interface InternalAlertData {

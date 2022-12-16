@@ -1,4 +1,4 @@
-import { IOError } from '@converge-exercise/errors'
+import { IOError } from '@changestream-poc/errors'
 import fetch, { Response } from 'node-fetch'
 
 export interface ExternalAlertData {

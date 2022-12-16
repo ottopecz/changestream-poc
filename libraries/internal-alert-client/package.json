@@ -1,7 +1,7 @@
 {
-  "name": "@converge-exercise/internal-alert-client",
+  "name": "@changestream-poc/internal-alert-client",
   "version": "1.0.0",
-  "description": "Converge exercise - internal-alert-client library",
+  "description": "Changestream poc - internal-alert-client library",
   "main": ".dist/index.js",
   "types": "src/index.d.ts",
   "scripts": {
@@ -13,19 +13,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+    "url": "git+https://github.com/ottopecz/changestream-poc.git"
   },
   "keywords": [
-    "converge",
-    "exercise",
+    "changestream",
+    "poc",
     "alert-client"
   ],
   "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ottopecz/converge-exercise/issues"
+    "url": "https://github.com/ottopecz/changestream-poc/issues"
   },
-  "homepage": "https://github.com/ottopecz/converge-exercise#readme",
+  "homepage": "https://github.com/ottopecz/changestream-poc#readme",
   "dependencies": {
     "node-fetch": "^2.6.7"
   },

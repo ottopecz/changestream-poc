@@ -17,4 +17,4 @@ process.env.MONGO_RESOURCE_NAME = process.env.MONGO_COLLECTION
 process.env.EXT_ALERT_PROVIDER_URL = 'https://devnull-as-a-service.com/dev/null'
 
 // Mock logger package
-jest.mock('@converge-exercise/logger')
+jest.mock('@changestream-poc/logger')

@@ -1,8 +1,8 @@
 import supertest from 'supertest'
-import MongoDBDriver from '@converge-exercise/mongo-driver'
+import MongoDBDriver from '@changestream-poc/mongo-driver'
 import { server } from '../../index'
 
-jest.mock('@converge-exercise/mongo-driver')
+jest.mock('@changestream-poc/mongo-driver')
 
 const mongoDBDriverGetDb = MongoDBDriver.prototype.getDb as jest.Mock
 

@@ -1,4 +1,4 @@
-import { ConflictError } from '@converge-exercise/errors'
+import { ConflictError } from '@changestream-poc/errors'
 import type { SensorDataType } from '../../sharedTypes'
 import type { DataRepo } from './types'
 

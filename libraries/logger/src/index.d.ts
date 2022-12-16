@@ -1,4 +1,4 @@
-declare module '@converge-exercise/logger' {
+declare module '@changestream-poc/logger' {
   export default class Logger {
     private readonly logger
 

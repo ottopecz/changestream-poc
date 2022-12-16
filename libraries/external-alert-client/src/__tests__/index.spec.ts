@@ -1,6 +1,6 @@
 import nock from 'nock'
 import fetch from 'node-fetch'
-import { IOError } from '@converge-exercise/errors'
+import { IOError } from '@changestream-poc/errors'
 import ExternalAlertClient, { ExternalAlertData } from '../'
 
 jest.mock('node-fetch', () => {

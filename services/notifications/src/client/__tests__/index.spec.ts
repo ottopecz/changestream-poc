@@ -1,12 +1,12 @@
 import { EventEmitter } from 'node:events'
 import { Db, ChangeStreamDocument } from 'mongodb'
-import MongoDBDriver from '@converge-exercise/mongo-driver'
-import ExternalAlertClient, { ExternalAlertData } from '@converge-exercise/external-alert-client'
+import MongoDBDriver from '@changestream-poc/mongo-driver'
+import ExternalAlertClient, { ExternalAlertData } from '@changestream-poc/external-alert-client'
 import { NotificationData, AlertNotificationContext, SensorAlertNotificationContext } from '../../sharedTypes'
 import client from '../'
 
-jest.mock('@converge-exercise/mongo-driver')
-jest.mock('@converge-exercise/external-alert-client')
+jest.mock('@changestream-poc/mongo-driver')
+jest.mock('@changestream-poc/external-alert-client')
 
 const mockedMongoDBDriverGetDb = jest.mocked(MongoDBDriver.prototype.getDb)
 const mockedAlertClientSendAlert = jest.mocked(ExternalAlertClient.prototype.sendAlert)

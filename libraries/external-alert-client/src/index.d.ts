@@ -1,6 +1,6 @@
 import { Response } from 'node-fetch'
 
-declare module '@converge-exercise/external-alert-client' {
+declare module '@changestream-poc/external-alert-client' {
   export interface ExternalAlertData {
     text: string
   }

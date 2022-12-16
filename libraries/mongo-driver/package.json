@@ -1,7 +1,7 @@
 {
-  "name": "@converge-exercise/mongo-driver",
+  "name": "@changestream-poc/mongo-driver",
   "version": "1.0.0",
-  "description": "Converge exercise - mongo-driver library",
+  "description": "Changestream poc - mongo-driver library",
   "main": ".dist/index.js",
   "types": "src/index.d.ts",
   "scripts": {
@@ -9,23 +9,23 @@
     "build": "npm run clean && tsc",
     "lint": "eslint '**/*.{js,ts}'",
     "lint:fix": "eslint --fix '**/*.{js,ts}'",
-    "test": "jest"
+    "test": "jest --testTimeout=14000"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ottopecz/converge-exercise.git"
+    "url": "git+https://github.com/ottopecz/changestream-poc.git"
   },
   "keywords": [
-    "converge",
-    "exercise",
+    "changestream",
+    "poc",
     "mongo-driver"
   ],
   "author": "Otto Pecz <otto.pecz.developer@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ottopecz/converge-exercise/issues"
+    "url": "https://github.com/ottopecz/changestream-poc/issues"
   },
-  "homepage": "https://github.com/ottopecz/converge-exercise#readme",
+  "homepage": "https://github.com/ottopecz/changestream-poc#readme",
   "dependencies": {
     "mongodb": "^4.12.1",
     "uuid": "^9.0.0"

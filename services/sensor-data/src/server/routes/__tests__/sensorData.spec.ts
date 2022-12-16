@@ -2,14 +2,14 @@ import supertest from 'supertest'
 import { Express } from 'express'
 import { server } from '../../index'
 import { MongoClient } from 'mongodb'
-import { IOError } from '@converge-exercise/errors'
+import { IOError } from '@changestream-poc/errors'
 import { config, configProvider } from '../../config'
 import { mongoDBDriver } from '../../singletons'
 import sensorData from './__fixtures__/sensorData.json'
 import { SensorDataType } from '../../../sharedTypes'
 
-jest.mock('@converge-exercise/mongo-driver', () => {
-  const origModule = jest.requireActual('@converge-exercise/mongo-driver')
+jest.mock('@changestream-poc/mongo-driver', () => {
+  const origModule = jest.requireActual('@changestream-poc/mongo-driver')
   origModule.default.prototype.createOne = jest.fn(origModule.default.prototype.createOne)
   origModule.default.prototype.read = jest.fn(origModule.default.prototype.read)
   return origModule

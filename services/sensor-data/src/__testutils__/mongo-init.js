@@ -5,7 +5,7 @@ db.createUser( // eslint-disable-line no-undef
     roles: [
       {
         role: 'readWrite',
-        db: 'converge-exercise_test-db'
+        db: 'changestream-poc_test-db'
       }
     ]
   }
