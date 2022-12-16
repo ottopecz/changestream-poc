@@ -9,46 +9,50 @@ export const config = Object.freeze({
   }
 })
 
-export function configProvider ({
-  nodeEnv,
-  logging,
-  mongo,
-  sensorData
-}: {
+interface ConfigProviderInput {
   nodeEnv: unknown
   logging: { level: unknown }
   mongo: {
     hosts: unknown
     database: unknown
     collection: unknown
-    isSRVConnection: unknown
-    username: unknown
-    password: unknown
-    options: unknown
+    isSRVConnection?: unknown
+    username?: unknown
+    password?: unknown
+    options?: unknown
   }
   sensorData: {
     from: unknown
     to: unknown
     alertUrl: unknown
   }
-}): {
-    nodeEnv: string
-    logging: { level: string }
-    mongo: {
-      hosts: string
-      database: string
-      collection: string
-      isSRVConnection?: boolean
-      username?: string
-      password?: string
-      options?: { [p: string ]: unknown }
-    }
-    sensorData: {
-      from: number
-      to: number
-      alertUrl: string
-    }
-  } {
+}
+
+interface ConfigProviderOutput {
+  nodeEnv: string
+  logging: { level: string }
+  mongo: {
+    hosts: string
+    database: string
+    collection: string
+    isSRVConnection?: boolean
+    username?: string
+    password?: string
+    options?: { [p: string ]: unknown }
+  }
+  sensorData: {
+    from: number
+    to: number
+    alertUrl: string
+  }
+}
+
+export function configProvider ({
+  nodeEnv,
+  logging,
+  mongo,
+  sensorData
+}: ConfigProviderInput): ConfigProviderOutput {
   if (typeof nodeEnv !== 'string') {
     throw new TypeError('The type of nodeEnv has to be a string')
   }

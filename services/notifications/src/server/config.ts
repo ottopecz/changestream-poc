@@ -8,13 +8,7 @@ export const config = Object.freeze({
   }
 })
 
-export function configProvider ({
-  nodeEnv,
-  port,
-  logging,
-  mongo,
-  notificationData
-}: {
+interface ConfigProviderInput {
   nodeEnv: unknown
   port: unknown
   logging: { level: unknown }
@@ -22,27 +16,36 @@ export function configProvider ({
     hosts: unknown
     database: unknown
     collection: unknown
-    isSRVConnection: unknown
-    username: unknown
-    password: unknown
-    options: unknown
+    isSRVConnection?: unknown
+    username?: unknown
+    password?: unknown
+    options?: unknown
   }
   notificationData: { resourceName: unknown }
-}): {
-    nodeEnv: string
-    port: number
-    logging: { level: string }
-    mongo: {
-      hosts: string
-      database: string
-      collection: string
-      isSRVConnection?: boolean
-      username?: string
-      password?: string
-      options?: { [p: string ]: unknown }
-    }
-    notificationData: { resourceName: string }
-  } {
+}
+interface ConfigProviderOutput {
+  nodeEnv: string
+  port: number
+  logging: { level: string }
+  mongo: {
+    hosts: string
+    database: string
+    collection: string
+    isSRVConnection?: boolean
+    username?: string
+    password?: string
+    options?: { [p: string ]: unknown }
+  }
+  notificationData: { resourceName: string }
+}
+
+export function configProvider ({
+  nodeEnv,
+  port,
+  logging,
+  mongo,
+  notificationData
+}: ConfigProviderInput): ConfigProviderOutput {
   if (typeof nodeEnv !== 'string') {
     throw new TypeError('The type of nodeEnv has to be a string')
   }
@@ -113,7 +116,7 @@ export function configProvider ({
   }
 
   if (typeof notificationData.resourceName !== 'string') {
-    throw new TypeError('The type of logging.level has to be a string')
+    throw new TypeError('The type of notificationData.resourceName has to be a string')
   }
 
   return Object.freeze({
